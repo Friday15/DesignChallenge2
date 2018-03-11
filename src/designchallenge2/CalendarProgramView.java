@@ -160,7 +160,7 @@ public class CalendarProgramView implements MViewController, ModelListener{
                         
 		}
 
-		calendarTable.setDefaultRenderer(calendarTable.getColumnClass(0), new TableRenderer());
+		calendarTable.setDefaultRenderer(calendarTable.getColumnClass(0), new TableRenderer(calendarTable.getSelectedRow(), calendarTable.getSelectedColumn()));
 	}
         
         

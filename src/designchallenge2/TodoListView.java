@@ -21,10 +21,12 @@ public class TodoListView extends javax.swing.JFrame implements MViewController,
 
     ArrayList <PlanButton> slots;
     ArrayList <JLabel> times;
+    CalendarModel cm;
     /**
      * Creates new form test
      */
-    public TodoListView() {
+    public TodoListView(CalendarModel cm) {
+        this.cm = cm;
         initComponents();
         slots = new ArrayList();
         times = new ArrayList();
@@ -276,9 +278,16 @@ public class TodoListView extends javax.swing.JFrame implements MViewController,
 
     @Override
     public void modelUpdated(ModelVC model) {
+        cm = ((CalendarModel)model);
+        System.out.println("Model updated: " + ((CalendarModel)model).dayToday);
         
-        //if(((CalendarModel)model).)
-          //      ((CalendarModel)model).getPlanList().get(((CalendarModel)model).getPlanList().size());          //gets latest plan added
+        for(int i = 0;i < cm.getPlanList().size();i++){
+            if(cm.dayToday == Integer.parseInt(((Plan)cm.getPlanList().get(i)).getDay())){
+            
+            }
+        }
+        
+                //Integer.parseInt(((Plan)cm.getPlanList().get(cm.getPlanList().size())).getDay());          //gets latest plan added
             
         
     }
@@ -313,7 +322,7 @@ public class TodoListView extends javax.swing.JFrame implements MViewController,
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new TodoListView().setVisible(true);
+        //        new TodoListView().setVisible(true);
             }
         });
     }

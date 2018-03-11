@@ -15,6 +15,12 @@ import javax.swing.table.DefaultTableCellRenderer;
  */
 public class TableRenderer extends DefaultTableCellRenderer
 {
+    private int x;
+    private int y;
+    public TableRenderer(int row, int col){
+        this.x = row;
+        this.y = col;
+    }
     public Component getTableCellRendererComponent (JTable table, Object value, boolean selected, boolean focused, int row, int column)
     {
             super.getTableCellRendererComponent(table, value, selected, focused, row, column);
@@ -22,8 +28,11 @@ public class TableRenderer extends DefaultTableCellRenderer
                     setBackground(new Color(220,220,255));
             else
                     setBackground(Color.WHITE);
+            if(row==x&&column==y)
+                setBackground(Color.RED);
             setBorder(null);
             setForeground(Color.black);
             return this;  
     }
-}
+    
+} 

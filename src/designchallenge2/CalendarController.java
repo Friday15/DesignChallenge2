@@ -26,7 +26,7 @@ public class CalendarController {
     public CalendarController(CalendarModel cm){
         this.calP = new CalendarProgramView(cm, this);
         this.eview = new EventView();
-        this.tlv = new TodoListView();
+        this.tlv = new TodoListView(cm);
         this.mpv = new ModifyPlanView();
         this.cm = cm;
 
@@ -41,8 +41,11 @@ public class CalendarController {
                     {  
                         int col = calP.calendarTable.getSelectedColumn();  
                         int row = calP.calendarTable.getSelectedRow();  
-                        calP.calendarTable.getValueAt(row, col);
-                        System.out.println("potato");
+                        if(calP.calendarTable.getValueAt(row, col) != null){
+                            cm.dayToday = (int) calP.calendarTable.getValueAt(row, col);
+                            System.out.println(cm.dayToday);
+                            cm.updateViews();
+                        }
                         
                     }
         });
@@ -55,6 +58,7 @@ public class CalendarController {
         this.tlv.addSlotsListener(new SlotsListen());
         
         this.cm.attachModelListener(calP);
+        this.cm.attachModelListener(tlv);
         
         calP.refreshCalendar(cm.monthToday, cm.yearToday);
         tlv.setVisible(true);
