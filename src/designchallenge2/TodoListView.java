@@ -60,6 +60,9 @@ public class TodoListView extends javax.swing.JFrame implements MViewController,
         this.repaint();
     }
 
+    void CreateListener(ActionListener listen){
+		Create.addActionListener(listen);
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -77,7 +80,7 @@ public class TodoListView extends javax.swing.JFrame implements MViewController,
         taskRadio = new javax.swing.JRadioButton();
         dayButton = new javax.swing.JButton();
         agendaButton = new javax.swing.JButton();
-        createButton = new javax.swing.JButton();
+        Create = new javax.swing.JButton();
         viewPane = new javax.swing.JPanel();
         dayPane = new javax.swing.JScrollPane();
         jSplitPane = new javax.swing.JSplitPane();
@@ -118,7 +121,7 @@ public class TodoListView extends javax.swing.JFrame implements MViewController,
             }
         });
 
-        createButton.setText("CREATE");
+        Create.setText("CREATE");
 
         viewPane.setLayout(new java.awt.CardLayout());
 
@@ -199,7 +202,7 @@ public class TodoListView extends javax.swing.JFrame implements MViewController,
                         .addComponent(eventRadio, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(viewLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(taskRadio, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(createButton, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(Create, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(37, 37, 37)
                 .addComponent(viewPane, javax.swing.GroupLayout.PREFERRED_SIZE, 677, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 50, Short.MAX_VALUE))
@@ -218,7 +221,7 @@ public class TodoListView extends javax.swing.JFrame implements MViewController,
                 .addGroup(PlannerPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(PlannerPaneLayout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(createButton, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(Create, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(107, 107, 107)
                         .addComponent(viewLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
@@ -274,6 +277,10 @@ public class TodoListView extends javax.swing.JFrame implements MViewController,
     @Override
     public void modelUpdated(ModelVC model) {
         
+        //if(((CalendarModel)model).)
+          //      ((CalendarModel)model).getPlanList().get(((CalendarModel)model).getPlanList().size());          //gets latest plan added
+            
+        
     }
     
     /**
@@ -312,13 +319,13 @@ public class TodoListView extends javax.swing.JFrame implements MViewController,
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton Create;
     private javax.swing.JPanel PlannerPane;
     private javax.swing.JButton agendaButton;
     private javax.swing.JPanel agendaPane;
     private javax.swing.JTextArea agendaTime;
     private javax.swing.JTextArea agendaTitles;
     private javax.swing.JPanel buttonPanel;
-    private javax.swing.JButton createButton;
     private javax.swing.JLabel dateLabel;
     private javax.swing.JButton dayButton;
     private javax.swing.JScrollPane dayPane;

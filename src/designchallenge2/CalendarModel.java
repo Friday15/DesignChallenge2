@@ -5,7 +5,10 @@
  */
 package designchallenge2;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.GregorianCalendar;
 import javax.swing.table.DefaultTableModel;
 
@@ -14,7 +17,7 @@ import javax.swing.table.DefaultTableModel;
  * @author Mart
  */
 public class CalendarModel implements ModelVC{
-    public int yearBound, monthBound, dayBound, yearToday, monthToday;
+    public int yearBound, monthBound, dayBound, yearToday, monthToday, dayToday;
     private ArrayList <Event> events;
     private ArrayList <Task> tasks;
     private ArrayList <Plan> plans;
@@ -31,6 +34,14 @@ public class CalendarModel implements ModelVC{
 	yearBound = cal.get(GregorianCalendar.YEAR);
 	monthToday = monthBound; 
 	yearToday = yearBound;
+        
+        DateFormat dateFormat = new SimpleDateFormat("dd/mm/yyyy/HH/mm/ss");
+            Date date = new Date();
+            String CDate=dateFormat.format(date);
+            String[] day = CDate.split("/");
+            System.out.println(day[0]);
+            
+        dayToday = Integer.parseInt(day[0]);
         
         modelCalendarTable = new DefaultTableModel(){
                     public boolean isCellEditable(int rowIndex, int mColIndex)

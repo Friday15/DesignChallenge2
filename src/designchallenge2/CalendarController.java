@@ -51,6 +51,7 @@ public class CalendarController {
         this.eview.SubmitListener(new  SubmitListen());
         this.eview.CSVListener(new CSVListen());
         this.eview.PSVListener(new PSVListen());
+        this.tlv.CreateListener(new CreateListen());
         this.tlv.addSlotsListener(new SlotsListen());
         
         this.cm.attachModelListener(calP);
@@ -175,6 +176,17 @@ public class CalendarController {
                 cm.updateViews();
             }
     }
+        
+        class CreateListen implements ActionListener{
+        /**
+         * does the action
+         * @param e contains the action performed
+         */
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                eview.setVisible(true);
+            }
+        }
         
         class SlotsListen implements ActionListener{
 

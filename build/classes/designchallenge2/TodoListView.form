@@ -68,7 +68,7 @@
                           <Component id="viewLabel" alignment="1" max="32767" attributes="0"/>
                           <Component id="taskRadio" alignment="1" max="32767" attributes="0"/>
                       </Group>
-                      <Component id="createButton" min="-2" pref="125" max="-2" attributes="0"/>
+                      <Component id="Create" min="-2" pref="125" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="37" max="-2" attributes="0"/>
                   <Component id="viewPane" min="-2" pref="677" max="-2" attributes="0"/>
@@ -93,7 +93,7 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace max="32767" attributes="0"/>
-                          <Component id="createButton" min="-2" pref="57" max="-2" attributes="0"/>
+                          <Component id="Create" min="-2" pref="57" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="107" max="-2" attributes="0"/>
                           <Component id="viewLabel" min="-2" pref="46" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
@@ -155,7 +155,7 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="agendaButtonActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JButton" name="createButton">
+        <Component class="javax.swing.JButton" name="Create">
           <Properties>
             <Property name="text" type="java.lang.String" value="CREATE"/>
           </Properties>
