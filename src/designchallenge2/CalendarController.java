@@ -145,12 +145,14 @@ public class CalendarController {
                     try {
                         String STask = eview.getDMonth()+"/"+eview.getDDay()+"/"+calP.getDYear()+"/"+eview.getDHour()+"/"+eview.getDMin()+"/00";    
                         Date start=new SimpleDateFormat("MM/dd/yyyy/HH/mm/ss").parse(STask);
+                        
                         Task newTask= new Task(eview.getDName(),start);
                         System.out.println("submit" + newTask.getName());
                         cm.addNewTask(newTask);
                         cm.addNewPlan(newTask);
                     } catch (Exception ex) {
-                        System.out.println(ex);
+                        System.out.println("submit "+ex);
+                        ex.printStackTrace();
                     }
                         
                 }else{
@@ -161,12 +163,14 @@ public class CalendarController {
                         String EEvent = eview.getEndDay()+"/"+eview.getEndMonth()+"/"+calP.getDYear()+"/"+eview.getEndHour()+"/"+eview.getEndMin()+"/00";   
                         Date End=new SimpleDateFormat("MM/dd/yyyy/HH/mm/ss").parse(EEvent);
                         
-                        Event newEvent= new Event(eview.getDName(),start,End);
+                        Event newEvent= new Event(eview.getDName(), start, End);
+                        System.out.println("event date" + newEvent.getStartDate());
                         System.out.println("submit" +newEvent.getName());
                         cm.addNewEvent(newEvent);
                         cm.addNewPlan(newEvent);
                     } catch (Exception ex) {
-                        System.out.println(ex);
+                        System.out.println("submit "+ex);
+                        ex.printStackTrace();
                     } 
                 }
                 //add newevent to some array list

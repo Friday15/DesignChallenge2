@@ -370,11 +370,7 @@ public class TodoListView extends javax.swing.JFrame implements MViewController,
                     }
                 }
             }                                             
-        }
-        
-            
-            
-        
+        } 
     }
     
     void resetSlots(){

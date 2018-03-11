@@ -38,6 +38,7 @@ abstract public class Plan {
         this.name = name;
         StartDate = s;
         EndDate = e;
+        System.out.println("s " + s);
         datesBetween = getSpan(s, e);
         daysBetween = getDaySpan(datesBetween);
         DateFormat df = new SimpleDateFormat("MM/dd/yyyy/HH/mm");
