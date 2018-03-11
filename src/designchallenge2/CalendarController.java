@@ -22,8 +22,9 @@ public class CalendarController {
     EventView eview;
     TodoListView tlv;
     ModifyPlanView mpv;
+    PlanButton pb;
     
-    public CalendarController(CalendarModel cm){
+    public CalendarController(final CalendarModel cm){
         this.calP = new CalendarProgramView(cm, this);
         this.eview = new EventView();
         this.tlv = new TodoListView(cm);
@@ -42,7 +43,7 @@ public class CalendarController {
                         int row = calP.calendarTable.getSelectedRow();  
                         if(calP.calendarTable.getValueAt(row, col) != null){
                             cm.dayToday = (int) calP.calendarTable.getValueAt(row, col);
-                            System.out.println(cm.dayToday);
+                            System.out.println("after click "+cm.dayToday);
                             cm.updateViews();
                         }
                         
@@ -56,6 +57,7 @@ public class CalendarController {
         this.tlv.CreateListener(new CreateListen());
         this.tlv.addSlotsListener(new SlotsListen());
         this.mpv.addBackListener(new BackListen());
+        this.mpv.addDoneListener(new DoneListen());
         
         this.cm.attachModelListener(calP);
         this.cm.attachModelListener(tlv);
@@ -153,10 +155,10 @@ public class CalendarController {
                         
                 }else{
                     try {
-                        String SEvent = eview.getDMonth()+"/"+eview.getDDay()+"/"+calP.getDYear()+"/"+eview.getDHour()+"/"+eview.getDMin()+"/00";    
+                        String SEvent = eview.getDDay()+"/"+eview.getDMonth()+"/"+calP.getDYear()+"/"+eview.getDHour()+"/"+eview.getDMin()+"/00";    
                         Date start=new SimpleDateFormat("MM/dd/yyyy/HH/mm/ss").parse(SEvent);
                         
-                        String EEvent = eview.getEndMonth()+"/"+eview.getEndDay()+"/"+calP.getDYear()+"/"+eview.getEndHour()+"/"+eview.getEndMin()+"/00";   
+                        String EEvent = eview.getEndDay()+"/"+eview.getEndMonth()+"/"+calP.getDYear()+"/"+eview.getEndHour()+"/"+eview.getEndMin()+"/00";   
                         Date End=new SimpleDateFormat("MM/dd/yyyy/HH/mm/ss").parse(EEvent);
                         
                         Event newEvent= new Event(eview.getDName(),start,End);
@@ -199,11 +201,12 @@ public class CalendarController {
         }
         
         class SlotsListen implements ActionListener{
-
+            
         @Override
         public void actionPerformed(ActionEvent ae) {
             for(int i = 0;i < cm.getPlanList().size();i++){
                 if(cm.getPlanList().get(i) == ((PlanButton)ae.getSource()).getPlan()){
+                    pb=((PlanButton)ae.getSource());
                     String name = ((Plan)cm.getPlanList().get(i)).getName();
                     Date date = ((Plan)cm.getPlanList().get(i)).getStartDate();
                     mpv.setPlanTexts(name, date);
@@ -213,5 +216,16 @@ public class CalendarController {
 
         }
             
+        }
+        class DoneListen implements ActionListener{
+        /**
+         * does the action
+         * @param e contains the action performed
+         */
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                pb.planEnded();
+                mpv.setVisible(false);
+            }
         }
 }

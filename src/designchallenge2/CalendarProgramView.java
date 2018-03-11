@@ -139,18 +139,18 @@ public class CalendarProgramView implements MViewController, ModelListener{
                         
                         int haveEvent=0;
                         
-                        String text ="<html> <b> "+i+" </b> <br> ";
-                        for(int k=0;k<cm.getEventList().size();k++){
-                            if(Integer.parseInt(((Event)(cm.getEventList().get(k))).getDay())==i&&Integer.parseInt(((Event)(cm.getEventList().get(k))).getMonth())==month+1
-                                    &&Integer.parseInt(((Event)(cm.getEventList().get(k))).getYear())==year){
-
-                                text=text+"<font color = "+"Red"+"> "+((Event)(cm.getEventList().get(k))).getName()+" </font> <br> ";
-                                haveEvent=1;
-                            }
-                        }
-                        text=text+"</html>";    
+//                        String text ="<html> <b> "+i+" </b> <br> ";
+//                        for(int k=0;k<cm.getEventList().size();k++){
+//                            if(Integer.parseInt(((Event)(cm.getEventList().get(k))).getDay())==i&&Integer.parseInt(((Event)(cm.getEventList().get(k))).getMonth())==month+1
+//                                    &&Integer.parseInt(((Event)(cm.getEventList().get(k))).getYear())==year){
+//
+//                                text=text+"<font color = "+"Red"+"> "+((Event)(cm.getEventList().get(k))).getName()+" </font> <br> ";
+//                                haveEvent=1;
+//                            }
+//                        }
+//                        text=text+"</html>";    
                         if(haveEvent==1){
-                           cm.modelCalendarTable.setValueAt(text, row, column);
+                           //cm.modelCalendarTable.setValueAt(text, row, column);
                         }
                         else
                            cm.modelCalendarTable.setValueAt(i, row, column);// THIS IS HOW U CHANGE STUFF IN SQUARES
@@ -158,6 +158,8 @@ public class CalendarProgramView implements MViewController, ModelListener{
 		}
 
 		calendarTable.setDefaultRenderer(calendarTable.getColumnClass(0), new TableRenderer(calendarTable.getSelectedRow(), calendarTable.getSelectedColumn()));
+                
+                
 	}
         
         

@@ -8,6 +8,7 @@ package designchallenge2;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import javax.swing.table.DefaultTableModel;
@@ -21,6 +22,7 @@ public class CalendarModel implements ModelVC{
     private ArrayList <Event> events;
     private ArrayList <Task> tasks;
     private ArrayList <Plan> plans;
+    private ArrayList <Date> takenDates;
     private ArrayList <ModelListener> listeners;
     public DefaultTableModel modelCalendarTable;
     CSVDataParser cdp = new CSVDataParser();
@@ -42,7 +44,7 @@ public class CalendarModel implements ModelVC{
             System.out.println(day[0]);
             
         dayToday = Integer.parseInt(day[0]);
-        
+        System.out.println("day today " + dayToday);
         modelCalendarTable = new DefaultTableModel(){
                     public boolean isCellEditable(int rowIndex, int mColIndex)
                     {
@@ -91,18 +93,42 @@ public class CalendarModel implements ModelVC{
 //        
 //    }
      
-    public void addNewEvent(Event eve){
-        events.add(eve);
+    public ArrayList<Date> getDaysBetweenDates(Date startdate, Date enddate){
         
+        ArrayList<Date> dates = new ArrayList<Date>();
+        Calendar calendar = new GregorianCalendar();
+        calendar.setTime(startdate);
+
+        while (calendar.getTime().before(enddate))
+        {
+            Date result = calendar.getTime();
+            dates.add(result);
+            calendar.add(Calendar.DATE, 1);
+        }
+        return dates;
+    }
+    
+    public void addNewEvent(Event eve){
+        System.out.println("potato event");
+        events.add(eve);
+        for(int i = 0;i < getDaysBetweenDates(eve.getStartDate(), eve.getEndDate()).size();i++){
+            addNewTakenDate(getDaysBetweenDates(eve.getStartDate(), eve.getEndDate()).get(i));
+        }  
     }
     
     public void addNewTask(Task t){
         tasks.add(t);
+        addNewTakenDate(t.getStartDate());
     }
     
     public void addNewPlan(Plan p){
         plans.add(p);
     }
+    
+    public void addNewTakenDate(Date d){
+        takenDates.add(d);
+    }
+    
     public ArrayList getEventList(){
         return this.events;
     }
@@ -113,6 +139,10 @@ public class CalendarModel implements ModelVC{
 
     public ArrayList getPlanList(){
         return this.plans;
+    }
+    
+    public ArrayList getTakenDateList(){
+        return this.takenDates;
     }
     
     @Override

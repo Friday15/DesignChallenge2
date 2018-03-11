@@ -5,6 +5,7 @@
  */
 package designchallenge2;
 
+import java.awt.Color;
 import javax.swing.JButton;
 
 /**
@@ -20,6 +21,27 @@ public class PlanButton extends JButton{
     
     public void setPlan(Plan plan){
         this.plan = plan;
+        String coloredname ="<html> <font color = ";
+        if(plan instanceof Event){
+            coloredname = coloredname + "Blue> ";
+            this.setBackground(Color.BLUE);
+        }else{
+            coloredname = coloredname + "Green> ";
+            this.setBackground(Color.GREEN);
+        }
+        coloredname = coloredname + plan.getName()+" </font> <br> </html>";
+        plan.setColoredName(coloredname);
+    }
+    public void planEnded(){
+        String coloredname ="<html> <font color = ";
+        if(plan instanceof Event){
+            coloredname = coloredname + "Gray> ";
+            this.setBackground(Color.GRAY);
+        }else{
+            coloredname = coloredname + "Gray> ";
+            this.setBackground(Color.GRAY);
+        }
+        this.setEnabled(false);
     }
     
     public Plan getPlan(){

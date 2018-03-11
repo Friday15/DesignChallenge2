@@ -45,6 +45,11 @@ public class ModifyPlanView extends javax.swing.JFrame {
         jLabel1.setText("Title:");
 
         DoneButton.setText("Mark As Done");
+        DoneButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                DoneButtonActionPerformed(evt);
+            }
+        });
 
         RemoveButton.setText("Remove");
 
@@ -114,6 +119,10 @@ public class ModifyPlanView extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void DoneButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DoneButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_DoneButtonActionPerformed
 
     /**
      * @param args the command line arguments

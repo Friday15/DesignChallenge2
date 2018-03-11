@@ -7,8 +7,10 @@ package designchallenge2;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 /**
  *
@@ -28,12 +30,16 @@ abstract public class Plan {
     private final String EDay;
     private final String EHour;
     private final String EMin;
-    
+    private String ColoredName;
+    private ArrayList <Date> datesBetween;
+    private ArrayList <Integer> daysBetween;
     
     public Plan(String name ,Date s, Date e){
         this.name = name;
         StartDate = s;
         EndDate = e;
+        datesBetween = getSpan(s, e);
+        daysBetween = getDaySpan(datesBetween);
         DateFormat df = new SimpleDateFormat("MM/dd/yyyy/HH/mm");
         String[] stuff =df.format(s).split("/");
         Month = stuff[0];
@@ -78,13 +84,52 @@ abstract public class Plan {
     public String getName(){
         return name;
     }
-    
+    public void setColoredName(String s){
+        this.ColoredName=s;
+    }
+    public String getColoredName(){
+        return ColoredName;
+    }
     public Date getStartDate(){
         return StartDate;
     }
     public Date getEndDate(){
         return EndDate;
     }
+    
+    public ArrayList<Date> getSpan(Date startdate, Date enddate){
+        
+        ArrayList<Date> dates = new ArrayList<>();
+        Calendar calendar = new GregorianCalendar();
+        calendar.setTime(startdate);
+
+        while (calendar.getTime().before(enddate))
+        {
+            Date result = calendar.getTime();
+            dates.add(result);
+            calendar.add(Calendar.DATE, 1);
+        }
+        return dates;
+    }
+    
+    public ArrayList<Integer> getDaySpan(ArrayList <Date> dates){
+        DateFormat df = new SimpleDateFormat("MM/dd/yyyy/HH/mm");
+        for(int i = 0;i < dates.size();i++){
+            String[] stuff =df.format(dates.get(i)).split("/");
+            daysBetween.add(Integer.parseInt(stuff[1]));
+        }
+        
+        return this.daysBetween;
+    }
+    
+    public ArrayList<Date> getDatesBetween(){
+        return this.datesBetween;
+    }
+    
+    public ArrayList<Integer> getDaysBetween(){
+        return this.daysBetween;
+    }
+    
     public String getDay(){
         return Day;
     }

@@ -10,6 +10,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Date;
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 
@@ -271,6 +272,40 @@ public class TodoListView extends javax.swing.JFrame implements MViewController,
         }
     }
    
+    
+    void DayFill(int start, int end, int planNum, int minute){
+        System.out.println("start " + start);
+        if(minute == 30)
+            start += 1;
+        for(int k = start;k < end;k++){
+            if(k == start){
+                slots.get(k*2).setPlan(((Plan)cm.getPlanList().get(planNum)));
+                String tempName = slots.get(k*2).getPlan().getColoredName();
+
+                slots.get(k*2).setEnabled(true);
+                slots.get(k*2).setContentAreaFilled(true);
+                slots.get(k*2).setText(tempName);
+
+                this.revalidate();
+                this.repaint();
+            }else{
+                if(k > start*2){
+                    slots.get(k).setPlan(((Plan)cm.getPlanList().get(planNum)));
+                    String tempName = slots.get(k).getPlan().getColoredName();
+
+                    slots.get(k).setEnabled(true);
+                    slots.get(k).setContentAreaFilled(true);
+                    slots.get(k).setText(tempName);
+
+                    this.revalidate();
+                    this.repaint();
+                }
+                
+            }
+            
+        }
+    }
+    
     @Override
     public void refresh() {
         
@@ -279,52 +314,75 @@ public class TodoListView extends javax.swing.JFrame implements MViewController,
     @Override
     public void modelUpdated(ModelVC model) {
         cm = ((CalendarModel)model);
+        resetSlots();                                                           
         
         for(int i = 0;i < cm.getPlanList().size();i++){
             int tempDay = Integer.parseInt(((Plan)cm.getPlanList().get(i)).getDay());
-
-            if(cm.dayToday == tempDay){
+            
+            
+            if(((Plan)cm.getPlanList().get(i)) instanceof Event){                               //checks if instance of event
+                int tempDaysBetweenSize = ((Plan)cm.getPlanList().get(i)).getDaysBetween().size();
                 
-                for(int j = 0;j < slots.size();j++){
-                    int tempMin = Integer.parseInt(((Plan)cm.getPlanList().get(i)).getMin());
-                    int tempHour = Integer.parseInt(((Plan)cm.getPlanList().get(i)).getHour());
+                for(int d = 0;d < tempDaysBetweenSize;d++){             //check daysBetween for match
+                    int dayWithinRange = ((Plan)cm.getPlanList().get(i)).getDaysBetween().get(d);
                     
-                    
-                    if(tempMin == 0){
-                        if(tempHour == j){
-                            slots.get(j*2).setPlan(((Plan)cm.getPlanList().get(i)));
-                            String tempName = slots.get(j*2).getPlan().getName();
+                    if(cm.dayToday == dayWithinRange){
 
-                            slots.get(j*2).setEnabled(true);
-                            slots.get(j*2).setContentAreaFilled(true);
-                            slots.get(j*2).setText(tempName);
+                        for(int j = 0;j < slots.size();j++){                                                    //increments over slots
+                            int tempMin = Integer.parseInt(((Plan)cm.getPlanList().get(i)).getMin());
+                            int tempHour = Integer.parseInt(((Plan)cm.getPlanList().get(i)).getHour());  
 
-                            this.revalidate();
-                            this.repaint();
-                            break;
-                        }
-                        
-                    }else{
-                        if(tempHour == j){
-                            slots.get(j*2+1).setPlan(((Plan)cm.getPlanList().get(i)));
-                            String tempName = slots.get(j*2+1).getPlan().getName();
+                            if(tempHour == j){
+                                int tempEndMin = Integer.parseInt(((Plan)cm.getPlanList().get(i)).getEMin());
+                                int tempEndHour = Integer.parseInt(((Plan)cm.getPlanList().get(i)).getEHour());
+                                int tempEndDay = Integer.parseInt(((Plan)cm.getPlanList().get(i)).getEDay());
+                                Date tempEndDate = ((Plan)cm.getPlanList().get(i)).getEndDate();
 
-                            slots.get(j*2+1).setEnabled(true);
-                            slots.get(j*2+1).setContentAreaFilled(true);
-                            slots.get(j*2+1).setText(tempName);
+                                if(tempDay < tempEndDay){
+                                    if(tempDay == dayWithinRange){
+                                        DayFill(j, slots.size(), i, tempMin);
+                                        break;
 
-                            this.revalidate();
-                            this.repaint();
-                            break;
+                                    }else if(dayWithinRange > tempDay && dayWithinRange < tempEndDay){
+                                        DayFill(0, slots.size(), i, tempMin);
+                                        break;
+
+                                    }else if(tempEndDay == dayWithinRange){
+                                        DayFill(0, tempEndHour, i, tempMin);
+                                        break;
+                                    }    
+                                }else{
+                                    if(tempHour < tempEndHour){
+                                        DayFill(tempHour, tempEndHour, i, tempMin);
+                                        break;
+                                    }else{
+                                        if(tempMin < tempEndMin){
+                                            DayFill(tempHour, tempHour+1, i, tempMin);
+                                            break;
+                                        }else{
+                                            DayFill(tempHour, tempHour, i, tempMin);
+                                            break;
+                                        }
+                                    }
+                                }      
+                            }
                         }
                     }
                 }
-            }
+            }                                             
         }
         
             
             
         
+    }
+    
+    void resetSlots(){
+        for(int i = 0;i < 48;i++){
+            slots.get(i).setEnabled(false);
+            slots.get(i).setContentAreaFilled(false);
+            slots.get(i).setText("");
+        }
     }
     
     /**
