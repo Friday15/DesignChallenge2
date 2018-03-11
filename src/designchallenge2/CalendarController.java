@@ -34,7 +34,6 @@ public class CalendarController {
         this.calP.addBtnPrevActionListener(new btnPrev_Action());
 	this.calP.addBtnNextActionListener(new btnNext_Action());
 	this.calP.addCmbYearActionListener(new cmbYear_Action());
-        this.calP.addEventBtnActionListener(new eventBtn_Action());
         
         this.calP.addTableListener(new MouseAdapter() {
                public void mouseClicked(MouseEvent evt)  
@@ -56,6 +55,7 @@ public class CalendarController {
         this.eview.PSVListener(new PSVListen());
         this.tlv.CreateListener(new CreateListen());
         this.tlv.addSlotsListener(new SlotsListen());
+        this.mpv.addBackListener(new BackListen());
         
         this.cm.attachModelListener(calP);
         this.cm.attachModelListener(tlv);
@@ -109,17 +109,11 @@ public class CalendarController {
                         {
 				String b = calP.cmbYear.getSelectedItem().toString();
 				cm.yearToday = Integer.parseInt(b);
-				cm.updateViews();
+//				cm.updateViews();
 			}
 		}
 	}
-        class eventBtn_Action implements ActionListener{
-            
-            public void actionPerformed (ActionEvent e){
-                eview.setVisible(true);
-               
-            }
-        }
+
         class CSVListen implements ActionListener{
             
             public void actionPerformed (ActionEvent e){
@@ -148,8 +142,9 @@ public class CalendarController {
                 if(eview.isTask()){
                     try {
                         String STask = eview.getDMonth()+"/"+eview.getDDay()+"/"+calP.getDYear()+"/"+eview.getDHour()+"/"+eview.getDMin()+"/00";    
-                        Date start=new SimpleDateFormat("dd/MM/yyyy/HH/mm/ss").parse(STask);
-                        Task newTask= new Task(eview.getName(),start);
+                        Date start=new SimpleDateFormat("MM/dd/yyyy/HH/mm/ss").parse(STask);
+                        Task newTask= new Task(eview.getDName(),start);
+                        System.out.println("submit" + newTask.getName());
                         cm.addNewTask(newTask);
                         cm.addNewPlan(newTask);
                     } catch (Exception ex) {
@@ -159,12 +154,13 @@ public class CalendarController {
                 }else{
                     try {
                         String SEvent = eview.getDMonth()+"/"+eview.getDDay()+"/"+calP.getDYear()+"/"+eview.getDHour()+"/"+eview.getDMin()+"/00";    
-                        Date start=new SimpleDateFormat("dd/MM/yyyy/HH/mm/ss").parse(SEvent);
+                        Date start=new SimpleDateFormat("MM/dd/yyyy/HH/mm/ss").parse(SEvent);
                         
                         String EEvent = eview.getEndMonth()+"/"+eview.getEndDay()+"/"+calP.getDYear()+"/"+eview.getEndHour()+"/"+eview.getEndMin()+"/00";   
-                        Date End=new SimpleDateFormat("dd/MM/yyyy/HH/mm/ss").parse(EEvent);
+                        Date End=new SimpleDateFormat("MM/dd/yyyy/HH/mm/ss").parse(EEvent);
                         
-                        Event newEvent= new Event(eview.getName(),start,End);
+                        Event newEvent= new Event(eview.getDName(),start,End);
+                        System.out.println("submit" +newEvent.getName());
                         cm.addNewEvent(newEvent);
                         cm.addNewPlan(newEvent);
                     } catch (Exception ex) {
@@ -180,6 +176,16 @@ public class CalendarController {
                 cm.updateViews();
             }
     }
+        
+        
+        class BackListen implements ActionListener{
+
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                mpv.setVisible(false);
+            }
+            
+        }
         
         class CreateListen implements ActionListener{
         /**

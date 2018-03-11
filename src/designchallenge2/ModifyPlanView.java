@@ -158,6 +158,10 @@ public class ModifyPlanView extends javax.swing.JFrame {
         RemoveButton.addActionListener(al);
     }
     
+    void addBackListener(ActionListener al){
+        BackButton.addActionListener(al);
+    }
+    
     void setPlanTexts(String name, Date startDate){
         TitleField.setText(name);
         StartDateField.setText(startDate.toString());

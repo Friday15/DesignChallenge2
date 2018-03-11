@@ -279,15 +279,50 @@ public class TodoListView extends javax.swing.JFrame implements MViewController,
     @Override
     public void modelUpdated(ModelVC model) {
         cm = ((CalendarModel)model);
-        System.out.println("Model updated: " + ((CalendarModel)model).dayToday);
         
         for(int i = 0;i < cm.getPlanList().size();i++){
-            if(cm.dayToday == Integer.parseInt(((Plan)cm.getPlanList().get(i)).getDay())){
-            
+            int tempDay = Integer.parseInt(((Plan)cm.getPlanList().get(i)).getDay());
+
+            if(cm.dayToday == tempDay){
+                
+                for(int j = 0;j < slots.size();j++){
+                    int tempMin = Integer.parseInt(((Plan)cm.getPlanList().get(i)).getMin());
+                    int tempHour = Integer.parseInt(((Plan)cm.getPlanList().get(i)).getHour());
+                    
+                    
+                    if(tempMin == 0){
+                        if(tempHour == j){
+                            slots.get(j*2).setPlan(((Plan)cm.getPlanList().get(i)));
+                            String tempName = slots.get(j*2).getPlan().getName();
+
+                            slots.get(j*2).setEnabled(true);
+                            slots.get(j*2).setContentAreaFilled(true);
+                            slots.get(j*2).setText(tempName);
+
+                            this.revalidate();
+                            this.repaint();
+                            break;
+                        }
+                        
+                    }else{
+                        if(tempHour == j){
+                            slots.get(j*2+1).setPlan(((Plan)cm.getPlanList().get(i)));
+                            String tempName = slots.get(j*2+1).getPlan().getName();
+
+                            slots.get(j*2+1).setEnabled(true);
+                            slots.get(j*2+1).setContentAreaFilled(true);
+                            slots.get(j*2+1).setText(tempName);
+
+                            this.revalidate();
+                            this.repaint();
+                            break;
+                        }
+                    }
+                }
             }
         }
         
-                //Integer.parseInt(((Plan)cm.getPlanList().get(cm.getPlanList().size())).getDay());          //gets latest plan added
+            
             
         
     }

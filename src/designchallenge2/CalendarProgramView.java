@@ -53,7 +53,6 @@ public class CalendarProgramView implements MViewController, ModelListener{
 		cmbYear = new JComboBox();
 		btnPrev = new JButton ("<<");
 		btnNext = new JButton (">>");
-                eventBtn = new JButton ("Add Event");
 		
                 
 		calendarTable = new JTable(this.cm.modelCalendarTable);
@@ -68,7 +67,6 @@ public class CalendarProgramView implements MViewController, ModelListener{
 		pane.add(calendarPanel);
 		calendarPanel.add(monthLabel);
 		calendarPanel.add(yearLabel);
-                calendarPanel.add(eventBtn);
 		calendarPanel.add(cmbYear);
 		calendarPanel.add(btnPrev);
 		calendarPanel.add(btnNext);
@@ -77,7 +75,6 @@ public class CalendarProgramView implements MViewController, ModelListener{
                 calendarPanel.setBounds(0, 0, 640, 670);
                 monthLabel.setBounds(320-monthLabel.getPreferredSize().width/2, 50, 200, 50);
 		yearLabel.setBounds(20, 610, 160, 40);
-                eventBtn.setBounds(220, 610, 160, 40);
 		cmbYear.setBounds(460, 610, 160, 40);
 		btnPrev.setBounds(20, 50, 100, 50);
 		btnNext.setBounds(520, 50, 100, 50);
@@ -176,9 +173,6 @@ public class CalendarProgramView implements MViewController, ModelListener{
             this.cmbYear.addActionListener(al);
         }
         
-        public void addEventBtnActionListener(ActionListener al){
-            this.eventBtn.addActionListener(al);
-        }
         
         public void addTableListener(MouseListener ml){
             this.calendarTable.addMouseListener(ml);
