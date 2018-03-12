@@ -15,12 +15,16 @@ import javax.swing.BorderFactory;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JRadioButton;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.Document;
+import javax.swing.text.SimpleAttributeSet;
+import javax.swing.text.StyleConstants;
 
 /**
  *
  * @author Ashen One
  */
-public class TodoListView extends javax.swing.JFrame implements MViewController, ModelListener {
+public class TodoListView extends javax.swing.JFrame implements ModelListener {
 
     ArrayList <PlanButton> slots;
     ArrayList <JLabel> times;
@@ -33,7 +37,7 @@ public class TodoListView extends javax.swing.JFrame implements MViewController,
         initComponents();
         slots = new ArrayList();
         times = new ArrayList();
-        
+       
         for(int i = 0;i < 48;i++){
             PlanButton button = new PlanButton();
             button.setPreferredSize(new Dimension(200, 60));
@@ -90,10 +94,8 @@ public class TodoListView extends javax.swing.JFrame implements MViewController,
         timePanel = new javax.swing.JPanel();
         buttonPanel = new javax.swing.JPanel();
         agendaPane = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        agendaTitles = new javax.swing.JTextArea();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        agendaTime = new javax.swing.JTextArea();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        agendaTitles = new javax.swing.JTextPane();
         saikouNoPlanner = new javax.swing.JLabel();
         eventCheck = new javax.swing.JCheckBox();
         taskCheck = new javax.swing.JCheckBox();
@@ -145,34 +147,24 @@ public class TodoListView extends javax.swing.JFrame implements MViewController,
 
         agendaPane.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-        agendaTitles.setColumns(20);
-        agendaTitles.setRows(5);
-        agendaTitles.setText("this is where we put the agenda title");
-        jScrollPane1.setViewportView(agendaTitles);
-
-        jScrollPane2.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-
-        agendaTime.setColumns(20);
-        agendaTime.setRows(5);
-        agendaTime.setText("agenda times\n");
-        jScrollPane2.setViewportView(agendaTime);
+        agendaTitles.setEditable(false);
+        agendaTitles.setContentType("text/html"); // NOI18N
+        agendaTitles.setFont(new java.awt.Font("Comic Sans MS", 0, 24)); // NOI18N
+        jScrollPane3.setViewportView(agendaTitles);
 
         javax.swing.GroupLayout agendaPaneLayout = new javax.swing.GroupLayout(agendaPane);
         agendaPane.setLayout(agendaPaneLayout);
         agendaPaneLayout.setHorizontalGroup(
             agendaPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(agendaPaneLayout.createSequentialGroup()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 466, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(21, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, agendaPaneLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 655, Short.MAX_VALUE)
+                .addContainerGap())
         );
         agendaPaneLayout.setVerticalGroup(
             agendaPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, agendaPaneLayout.createSequentialGroup()
-                .addGroup(agendaPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 482, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1))
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 482, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -320,7 +312,6 @@ public class TodoListView extends javax.swing.JFrame implements MViewController,
             slotNum += 1;
         
         for(int k = slotNum;k < end;k++){
-            if(k == slotNum){
                 slots.get(k).setPlan(((Plan)cm.getPlanList().get(planNum)));
 
                 slots.get(k).setEnabled(true);
@@ -331,21 +322,6 @@ public class TodoListView extends javax.swing.JFrame implements MViewController,
                 
                 this.revalidate();
                 this.repaint();
-            }else{
-                if(k > start*2){
-                    slots.get(k).setPlan(((Plan)cm.getPlanList().get(planNum)));
-
-                    slots.get(k).setEnabled(true);
-                    slots.get(k).setContentAreaFilled(true);
-
-                    if(slots.get(k).getPlan().getDone()==true)
-                        slots.get(k).planEnded();
-
-                    this.revalidate();
-                    this.repaint();
-                }
-                
-            }
             
         }
     }
@@ -361,7 +337,6 @@ public class TodoListView extends javax.swing.JFrame implements MViewController,
             end += 1;
             
         for(int k = slotNum;k < end;k++){
-            if(k == slotNum){
                 slots.get(k).setPlan(((Plan)cm.getPlanList().get(planNum)));
 
                 slots.get(k).setEnabled(true);
@@ -372,21 +347,7 @@ public class TodoListView extends javax.swing.JFrame implements MViewController,
                 
                 this.revalidate();
                 this.repaint();
-            }else{
-                if(k > start*2){
-                    slots.get(k).setPlan(((Plan)cm.getPlanList().get(planNum)));
-
-                    slots.get(k).setEnabled(true);
-                    slots.get(k).setContentAreaFilled(true);
-
-                    if(slots.get(k).getPlan().getDone()==true)
-                        slots.get(k).planEnded();
-
-                    this.revalidate();
-                    this.repaint();
-                }
-                
-            }
+            
             
         }
     }
@@ -411,15 +372,12 @@ public class TodoListView extends javax.swing.JFrame implements MViewController,
                 
      }
     
-    @Override
-    public void refresh() {
-        
-    }
 
     public void TaskFill(CalendarModel cm, Plan tempPlan, int planNum){
         int tempDay = Integer.parseInt(tempPlan.getDay());
         
         if(cm.dayToday == tempDay){
+            updateAgenda(tempPlan);
             for(int j = 0;j < slots.size();j++){                                                    //increments over slots
                 int tempMin = Integer.parseInt(tempPlan.getMin());
                 int tempHour = Integer.parseInt(tempPlan.getHour()); 
@@ -446,6 +404,7 @@ public class TodoListView extends javax.swing.JFrame implements MViewController,
 
             if(cm.dayToday == dayWithinRange){
 
+                updateAgenda((Event)tempPlan);
                 for(int j = 0;j < slots.size();j++){                                                    //increments over slots
                     
                     if(tempHour == j){
@@ -492,7 +451,8 @@ public class TodoListView extends javax.swing.JFrame implements MViewController,
     public void modelUpdated(ModelVC model) {
         cm = ((CalendarModel)model);
         resetSlots();                                                           
-        
+        resetAgenda();
+        changeDateLabel(cm);
         for(int i = 0;i < cm.getPlanList().size();i++){
             Plan tempPlan = ((Plan)cm.getPlanList().get(i));
             
@@ -514,6 +474,124 @@ public class TodoListView extends javax.swing.JFrame implements MViewController,
             }
                                                        
         } 
+    }
+    
+    public String monthToWord(int monthNum){
+        String month = new String();
+        switch (monthNum) {
+            case 0:
+                month = "January";
+                break;
+            case 1:
+                month = "February";
+                break;
+            case 2:
+                month = "March";
+                break;
+            case 3:
+                month = "April";
+                break;
+            case 4:
+                month = "May";
+                break;
+            case 5:
+                month = "June";
+                break;
+            case 6:
+                month = "July";
+                break;
+            case 7:
+                month = "August";
+                break;
+            case 8:
+                month = "September";
+                break;
+            case 9:
+                month = "October";
+                break;
+            case 10:
+                month = "November";
+                break;
+            case 11:
+                month = "December";
+                break;
+            default:
+                break;
+        }
+        return month;
+    }
+    
+    public void changeDateLabel(CalendarModel cm){
+        StringBuilder sb = new StringBuilder();
+        String month = monthToWord(cm.monthToday);
+        
+        sb.append(month).append(" ");
+        sb.append(cm.dayToday);
+        dateLabel.setText(sb.toString());
+    }
+    
+    public void updateAgenda(Plan plan){
+        StringBuilder sb = new StringBuilder();
+        String tempHour = plan.getHour();
+        String tempMin = plan.getMin();
+        String tempName = plan.getName();
+        
+        sb.append(tempHour);
+        sb.append(": ").append(tempMin);
+        sb.append(" - ").append(tempName).append("\n");
+        appendToAgenda(sb.toString(), Color.GREEN);
+    }
+    
+    public void updateAgenda(Event event){
+        StringBuilder sb = new StringBuilder();
+        String tempDay = event.getDay();
+        String tempHour = event.getHour();
+        String tempMin = event.getMin();
+        String tempName = event.getName();
+        String tempEndMonth = event.getEMonth();
+        String tempEndDay = event.getEDay();
+        String tempEndHour = event.getEHour();
+        String tempEndMin = event.getEMin();
+        String tempMonth = monthToWord(Integer.parseInt(event.getMonth())-1);
+        System.out.println("tempmonth "+tempMonth);
+        
+        if(Integer.parseInt(tempDay) < Integer.parseInt(tempEndDay)){
+           sb.append(tempMonth).append(", ");
+           sb.append(tempDay).append(" ");
+           sb.append(tempHour);
+           sb.append(": ").append(tempMin);
+           sb.append(" to ");
+           sb.append(tempEndMonth).append(" ");
+           sb.append(tempEndDay).append(" ");
+        }else{
+            sb.append(tempHour);
+            sb.append(": ").append(tempMin);
+            sb.append(" to ");
+            
+        }
+        
+        sb.append(tempEndHour);
+        sb.append(": ").append(tempEndMin);
+        sb.append(" - ").append(tempName).append("\n");
+        
+        appendToAgenda(sb.toString(), Color.BLUE);
+
+    }
+    
+    public void appendToAgenda(String s, Color color) {
+        SimpleAttributeSet keyWord = new SimpleAttributeSet();
+        StyleConstants.setForeground(keyWord, color);
+        
+        try {
+            Document doc = agendaTitles.getDocument();
+            doc.insertString(doc.getLength(), s, keyWord);
+        }catch(BadLocationException exc) {
+            exc.printStackTrace();
+        }
+    }
+    
+    public void resetAgenda(){
+        agendaTitles.setText("");
     }
     
     void resetSlots(){
@@ -561,7 +639,7 @@ public class TodoListView extends javax.swing.JFrame implements MViewController,
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-        //        new TodoListView().setVisible(true);
+                //new TodoListView().setVisible(true);
             }
         });
     }
@@ -571,15 +649,13 @@ public class TodoListView extends javax.swing.JFrame implements MViewController,
     private javax.swing.JPanel PlannerPane;
     private javax.swing.JButton agendaButton;
     private javax.swing.JPanel agendaPane;
-    private javax.swing.JTextArea agendaTime;
-    private javax.swing.JTextArea agendaTitles;
+    private javax.swing.JTextPane agendaTitles;
     private javax.swing.JPanel buttonPanel;
     private javax.swing.JLabel dateLabel;
     private javax.swing.JButton dayButton;
     private javax.swing.JScrollPane dayPane;
     private javax.swing.JCheckBox eventCheck;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JSplitPane jSplitPane;
     private javax.swing.JLabel saikouNoPlanner;
     private javax.swing.JCheckBox taskCheck;

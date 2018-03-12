@@ -31,7 +31,6 @@ abstract public class Plan {
     private final String EHour;
     private final String EMin;
     private String ColoredName;
-    private ArrayList <Date> datesBetween;
     private ArrayList <Integer> daysBetween;
     private boolean done;
     
@@ -61,8 +60,7 @@ abstract public class Plan {
         int iday2 = Integer.parseInt(EDay);
         for(int i=iday1;i<=iday2;i++){
             daysBetween.add(i);
-//            if(i==iday2&&Integer.parseInt(EHour)==0&&Integer.parseInt(EMin)==0)
-//                daysBetween.remove(i);
+
         }
 
         
@@ -91,7 +89,6 @@ abstract public class Plan {
         EHour = stuff2[3];
         EMin = stuff2[4];
         
-        //this.timeStart = timeStart;
     }
     
     public String getName(){
@@ -110,29 +107,11 @@ abstract public class Plan {
         return EndDate;
     }
     
-//    public ArrayList<Date> getSpan(Date startdate, Date enddate){
-//        
-//        ArrayList<Date> dates = new ArrayList<>();
-//        Calendar calendar = new GregorianCalendar();
-//        calendar.setTime(startdate);
-//
-//        while (calendar.getTime().before(enddate))
-//        {
-//            Date result = calendar.getTime();
-//            dates.add(result);
-//            calendar.add(Calendar.DATE, 1);
-//        }
-//        return dates;
-//    }
-    
     public boolean getDone(){
         return done;
     }
     public void markedDone(){
         done =true;
-    }
-    public ArrayList<Date> getDatesBetween(){
-        return this.datesBetween;
     }
     
     public ArrayList<Integer> getDaysBetween(){

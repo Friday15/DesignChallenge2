@@ -15,7 +15,7 @@ import java.awt.event.*;
 import java.util.GregorianCalendar;
 
 
-public class CalendarProgramView implements MViewController, ModelListener{
+public class CalendarProgramView implements ModelListener{
 
         /**** Swing Components ****/
         public JLabel monthLabel, yearLabel;
@@ -184,13 +184,9 @@ public class CalendarProgramView implements MViewController, ModelListener{
             return cmbYear.getSelectedIndex()+2018-100;
     }
 
-    @Override
-    public void refresh() {
-        refreshCalendar(cm.monthToday, cm.yearToday);
-    }
 
     @Override
     public void modelUpdated(ModelVC model) {
-        refresh();
+        refreshCalendar(cm.monthToday, cm.yearToday);
     }
 }

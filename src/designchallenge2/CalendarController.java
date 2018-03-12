@@ -62,7 +62,8 @@ public class CalendarController {
         this.cm.attachModelListener(calP);
         this.cm.attachModelListener(tlv);
         
-        calP.refreshCalendar(cm.monthToday, cm.yearToday);
+        
+        cm.updateViews();
         tlv.setVisible(true);
     }
     
