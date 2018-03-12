@@ -157,12 +157,12 @@ public class CalendarController {
                         
                 }else{
                     try {
-                        String SEvent = eview.getDDay()+"/"+eview.getDMonth()+"/"+calP.getDYear()+"/"+eview.getDHour()+"/"+eview.getDMin()+"/00";    
+                        String SEvent = eview.getDMonth()+"/"+eview.getDDay()+"/"+calP.getDYear()+"/"+eview.getDHour()+"/"+eview.getDMin()+"/00";    
                         Date start=new SimpleDateFormat("MM/dd/yyyy/HH/mm/ss").parse(SEvent);
                         
-                        String EEvent = eview.getEndDay()+"/"+eview.getEndMonth()+"/"+calP.getDYear()+"/"+eview.getEndHour()+"/"+eview.getEndMin()+"/00";   
+                        String EEvent = eview.getEndMonth()+"/"+eview.getEndDay()+"/"+calP.getDYear()+"/"+eview.getEndHour()+"/"+eview.getEndMin()+"/00";   
                         Date End=new SimpleDateFormat("MM/dd/yyyy/HH/mm/ss").parse(EEvent);
-                        
+                        System.out.println(start+" To "+End);
                         Event newEvent= new Event(eview.getDName(), start, End);
                         System.out.println("event date" + newEvent.getStartDate());
                         System.out.println("submit" +newEvent.getName());
@@ -212,8 +212,16 @@ public class CalendarController {
                 if(cm.getPlanList().get(i) == ((PlanButton)ae.getSource()).getPlan()){
                     pb=((PlanButton)ae.getSource());
                     String name = ((Plan)cm.getPlanList().get(i)).getName();
-                    Date date = ((Plan)cm.getPlanList().get(i)).getStartDate();
-                    mpv.setPlanTexts(name, date);
+                    Date startDate = ((Plan)cm.getPlanList().get(i)).getStartDate();
+                    
+                    if(((Plan)cm.getPlanList().get(i)) instanceof Event){
+                        Date endDate = ((Plan)cm.getPlanList().get(i)).getEndDate();
+                        mpv.setPlanTexts(name, startDate, endDate);
+                    }else{
+                        
+                    }
+                        
+                        
                     mpv.setVisible(true);
                 }
             }

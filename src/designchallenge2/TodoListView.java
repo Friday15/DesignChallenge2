@@ -306,62 +306,93 @@ public class TodoListView extends javax.swing.JFrame implements MViewController,
         }
     }
     
+    void SingleFill(int slot, int planNum, int minute){
+        if(minute == 30)
+            slot += 1;
+
+        slots.get(slot*2).setPlan(((Plan)cm.getPlanList().get(planNum)));
+        String tempName = slots.get(slot*2).getPlan().getColoredName();
+
+        slots.get(slot*2).setEnabled(true);
+        slots.get(slot*2).setContentAreaFilled(true);
+        slots.get(slot*2).setText(tempName);
+
+        this.revalidate();
+        this.repaint();
+
+                
+     }
+    
     @Override
     public void refresh() {
         
     }
 
+    public void TaskFill(CalendarModel cm, Plan tempPlan, int planNum){
+        int tempDay = Integer.parseInt(tempPlan.getDay());
+        
+        if(cm.dayToday == tempDay){
+            for(int j = 0;j < slots.size();j++){                                                    //increments over slots
+                int tempMin = Integer.parseInt(tempPlan.getMin());
+                int tempHour = Integer.parseInt(tempPlan.getHour()); 
+
+                if(tempHour == j){
+                    SingleFill(j, planNum, tempMin);
+                }
+            }
+        }
+    }
     
     public void EventFill(CalendarModel cm, Plan tempPlan, int i){
         int tempDaysBetweenSize = tempPlan.getDaysBetween().size();
         int tempDay = Integer.parseInt(tempPlan.getDay());
         
-                for(int d = 0;d < tempDaysBetweenSize;d++){             //check daysBetween for match
-                    int dayWithinRange = tempPlan.getDaysBetween().get(d);
-                    
-                    if(cm.dayToday == dayWithinRange){
+        for(int d = 0;d < tempDaysBetweenSize;d++){             //check daysBetween for match
+            int dayWithinRange = tempPlan.getDaysBetween().get(d);
 
-                        for(int j = 0;j < slots.size();j++){                                                    //increments over slots
-                            int tempMin = Integer.parseInt(tempPlan.getMin());
-                            int tempHour = Integer.parseInt(tempPlan.getHour());  
+            if(cm.dayToday == dayWithinRange){
 
-                            if(tempHour == j){
-                                int tempEndMin = Integer.parseInt(tempPlan.getEMin());
-                                int tempEndHour = Integer.parseInt(tempPlan.getEHour());
-                                int tempEndDay = Integer.parseInt(tempPlan.getEDay());
-                                Date tempEndDate = tempPlan.getEndDate();
+                for(int j = 0;j < slots.size();j++){                                                    //increments over slots
+                    int tempMin = Integer.parseInt(tempPlan.getMin());
+                    int tempHour = Integer.parseInt(tempPlan.getHour());  
 
-                                if(tempDay < tempEndDay){
-                                    if(tempDay == dayWithinRange){
-                                        DayFill(j, slots.size(), i, tempMin);
-                                        break;
+                    if(tempHour == j){
+                        int tempEndMin = Integer.parseInt(tempPlan.getEMin());
+                        int tempEndHour = Integer.parseInt(tempPlan.getEHour());
+                        int tempEndDay = Integer.parseInt(tempPlan.getEDay());
+                        Date tempEndDate = tempPlan.getEndDate();
 
-                                    }else if(dayWithinRange > tempDay && dayWithinRange < tempEndDay){
-                                        DayFill(0, slots.size(), i, tempMin);
-                                        break;
+                        if(tempDay < tempEndDay){
+                            if(tempDay == dayWithinRange){
+                                DayFill(j, slots.size(), i, tempMin);
+                                break;
 
-                                    }else if(tempEndDay == dayWithinRange){
-                                        DayFill(0, tempEndHour, i, tempMin);
-                                        break;
-                                    }    
+                            }else if(dayWithinRange > tempDay && dayWithinRange < tempEndDay){
+                                DayFill(0, slots.size(), i, tempMin);
+                                break;
+
+                            }else if(tempEndDay == dayWithinRange){
+                                DayFill(0, tempEndHour, i, tempMin);
+                                break;
+                            }    
+                        }else{
+                            if(tempHour < tempEndHour){
+                                DayFill(tempHour, tempEndHour, i, tempMin);
+                                break;
+                            }else{
+                                if(tempMin < tempEndMin){
+                                    DayFill(tempHour, tempHour+1, i, tempMin);
+                                    break;
                                 }else{
-                                    if(tempHour < tempEndHour){
-                                        DayFill(tempHour, tempEndHour, i, tempMin);
-                                        break;
-                                    }else{
-                                        if(tempMin < tempEndMin){
-                                            DayFill(tempHour, tempHour+1, i, tempMin);
-                                            break;
-                                        }else{
-                                            DayFill(tempHour, tempHour, i, tempMin);
-                                            break;
-                                        }
-                                    }
-                                }      
+                                    DayFill(tempHour, tempHour, i, tempMin);
+                                    break;
+                                }
                             }
-                        }
+                        }      
                     }
                 }
+            }
+        }
     }
     
     @Override
@@ -376,7 +407,7 @@ public class TodoListView extends javax.swing.JFrame implements MViewController,
             if(tempPlan instanceof Event){                               //checks if instance of event
                 EventFill(cm, tempPlan, i);
             }else if(tempPlan instanceof Task){
-                
+                TaskFill(cm, tempPlan, i);
             }                                             
         } 
     }

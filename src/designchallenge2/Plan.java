@@ -35,12 +35,11 @@ abstract public class Plan {
     private ArrayList <Integer> daysBetween;
     
     public Plan(String name ,Date s, Date e){
+        daysBetween = new ArrayList();
         this.name = name;
         StartDate = s;
         EndDate = e;
-        System.out.println("s " + s);
-        datesBetween = getSpan(s, e);
-        daysBetween = getDaySpan(datesBetween);
+
         DateFormat df = new SimpleDateFormat("MM/dd/yyyy/HH/mm");
         String[] stuff =df.format(s).split("/");
         Month = stuff[0];
@@ -55,8 +54,17 @@ abstract public class Plan {
         EYear =stuff2[2];
         EHour = stuff2[3];
         EMin = stuff2[4];
+
+        int iday1 = Integer.parseInt(Day);
+        int iday2 = Integer.parseInt(EDay);
+        for(int i=iday1;i<=iday2;i++){
+            daysBetween.add(i);
+//            if(i==iday2&&Integer.parseInt(EHour)==0&&Integer.parseInt(EMin)==0)
+//                daysBetween.remove(i);
+        }
+
         
-    }
+        }
     public Plan(String name ,Date s){
         this.name = name;
         StartDate = s;
@@ -79,6 +87,7 @@ abstract public class Plan {
         EYear =stuff2[2];
         EHour = stuff2[3];
         EMin = stuff2[4];
+        
         //this.timeStart = timeStart;
     }
     
@@ -98,30 +107,21 @@ abstract public class Plan {
         return EndDate;
     }
     
-    public ArrayList<Date> getSpan(Date startdate, Date enddate){
-        
-        ArrayList<Date> dates = new ArrayList<>();
-        Calendar calendar = new GregorianCalendar();
-        calendar.setTime(startdate);
-
-        while (calendar.getTime().before(enddate))
-        {
-            Date result = calendar.getTime();
-            dates.add(result);
-            calendar.add(Calendar.DATE, 1);
-        }
-        return dates;
-    }
+//    public ArrayList<Date> getSpan(Date startdate, Date enddate){
+//        
+//        ArrayList<Date> dates = new ArrayList<>();
+//        Calendar calendar = new GregorianCalendar();
+//        calendar.setTime(startdate);
+//
+//        while (calendar.getTime().before(enddate))
+//        {
+//            Date result = calendar.getTime();
+//            dates.add(result);
+//            calendar.add(Calendar.DATE, 1);
+//        }
+//        return dates;
+//    }
     
-    public ArrayList<Integer> getDaySpan(ArrayList <Date> dates){
-        DateFormat df = new SimpleDateFormat("MM/dd/yyyy/HH/mm");
-        for(int i = 0;i < dates.size();i++){
-            String[] stuff =df.format(dates.get(i)).split("/");
-            daysBetween.add(Integer.parseInt(stuff[1]));
-        }
-        
-        return this.daysBetween;
-    }
     
     public ArrayList<Date> getDatesBetween(){
         return this.datesBetween;
