@@ -62,7 +62,8 @@ public class CalendarController {
         this.cm.attachModelListener(calP);
         this.cm.attachModelListener(tlv);
         
-        calP.refreshCalendar(cm.monthToday, cm.yearToday);
+        cm.updateViews();
+        //calP.refreshCalendar(cm.monthToday, cm.yearToday);
         tlv.setVisible(true);
     }
     
@@ -111,7 +112,7 @@ public class CalendarController {
                         {
 				String b = calP.cmbYear.getSelectedItem().toString();
 				cm.yearToday = Integer.parseInt(b);
-//				cm.updateViews();
+				cm.updateViews();
 			}
 		}
 	}
@@ -121,7 +122,7 @@ public class CalendarController {
             public void actionPerformed (ActionEvent e){
                 String csv = eview.getCSV();
                cm.cdp.readData(csv);
-               //cm.CSVreaderToModel(cm.cdp.getEvents());
+               cm.CSVreaderToModel(cm.cdp.getPlans());
             }
         }
         class PSVListen implements ActionListener{
@@ -173,7 +174,7 @@ public class CalendarController {
                     } 
                 }
                 //add newevent to some array list
-                cm.dw.writeData(cm.getEventList());                                //writes to Event List.csv
+                cm.dw.writeData(cm.getPlanList());                                //writes to Event List.csv
                 
                 eview.reset();
                 eview.setVisible(false);//only use it if date is actaully useable

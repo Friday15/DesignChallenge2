@@ -65,7 +65,7 @@ public class CalendarModel implements ModelVC{
         
         cdp.readData();                                                         //Reads data from csv immediately
         pdp.readData();
-        CSVreaderToModel(cdp.getEvents());
+        CSVreaderToModel(cdp.getPlans());
 //        PSVreaderToModel(pdp.getEvents());
     }
    
@@ -78,24 +78,24 @@ public class CalendarModel implements ModelVC{
         }
     }
     
-    void CSVreaderToModel(ArrayList <String []> eventsRead){
-        for(int i = 0; i < eventsRead.size(); i++){
+    void CSVreaderToModel(ArrayList <String []> plansRead){
+        for(int i = 0; i < plansRead.size(); i++){
             try {
-                String Sdates = eventsRead.get(i)[3];                  //in the csv date was all in one string separated by /
+                String Sdates = plansRead.get(i)[3];                  //in the csv date was all in one string separated by /
                 Date start=new SimpleDateFormat("MM/dd/yyyy/HH/mm").parse(Sdates);
-                String Edates = eventsRead.get(i)[4];
+                String Edates = plansRead.get(i)[4];
                 Date end=new SimpleDateFormat("MM/dd/yyyy/HH/mm").parse(Edates);
                 Boolean done;
-                if(eventsRead.get(i)[2].equals("1"))
+                if(plansRead.get(i)[2].equals("1"))
                     done = true;
                 else
                     done = false;
-                if(eventsRead.get(i)[1].equals("T")){
-                    Task newTask = new Task(eventsRead.get(i)[0],start,done);
+                if(plansRead.get(i)[1].equals("T")){
+                    Task newTask = new Task(plansRead.get(i)[0],start,done);
                     addNewPlan(newTask);
                     addNewTask(newTask);
                 }else{
-                    Event newEvent = new Event(eventsRead.get(i)[0],start,end,done);
+                    Event newEvent = new Event(plansRead.get(i)[0],start,end,done);
                     addNewPlan(newEvent);
                     addNewEvent(newEvent);
                 }
@@ -107,10 +107,10 @@ public class CalendarModel implements ModelVC{
         }
         
     }
-//     void PSVreaderToModel(ArrayList <String []> eventsRead){
-//        for(int i = 0; i < eventsRead.size(); i++){
-//            String [] dates = eventsRead.get(i)[1].split("/");                  //in the psv date was all in one string separated by /
-//            addNewEvent(new Event(eventsRead.get(i)[0], eventsRead.get(i)[2], dates[0], dates[1], dates[2]));
+//     void PSVreaderToModel(ArrayList <String []> plansRead){
+//        for(int i = 0; i < plansRead.size(); i++){
+//            String [] dates = plansRead.get(i)[1].split("/");                  //in the psv date was all in one string separated by /
+//            addNewEvent(new Event(plansRead.get(i)[0], plansRead.get(i)[2], dates[0], dates[1], dates[2]));
 //        }
 //        
 //    }

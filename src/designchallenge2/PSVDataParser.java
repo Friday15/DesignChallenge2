@@ -62,7 +62,7 @@ public class PSVDataParser extends DataParser{
     }
 
     
-    public ArrayList getEvents(){                                           
+    public ArrayList getPlans(){                                           
         return this.lines;
     }
 }

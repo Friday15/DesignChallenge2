@@ -31,9 +31,9 @@ public class CSVDataParser extends DataParser{
             while ((line = br.readLine()) != null) {
 
                 // use comma as separator
-                String [] events = line.split(cvsSplitBy);
+                String [] plans = line.split(cvsSplitBy);
                 
-                lines.add(events);
+                lines.add(plans);
             }
 
         } catch (IOException e) {
@@ -44,7 +44,7 @@ public class CSVDataParser extends DataParser{
     void readData(){
         System.out.println("Reading data from csv file");
         //F:\\Documents\\NetBeansProjects\\DesignChallenge2\\src\\designchallenge2\\Event List.csv"
-        String csvFile = "C:\\Users\\Mart\\Desktop\\temp folder\\swdespa calendar\\DesignChallenge2\\src\\designchallenge2\\Event List.csv";               
+        String csvFile = "F:\\\\Documents\\\\NetBeansProjects\\\\DesignChallenge2\\\\src\\\\designchallenge2\\\\Event List.csv";               
         String line = "";
         String cvsSplitBy = ",";
        
@@ -63,7 +63,7 @@ public class CSVDataParser extends DataParser{
     }
 
     
-    public ArrayList getEvents(){                                           
+    public ArrayList getPlans(){                                           
         return this.lines;
     }
 }

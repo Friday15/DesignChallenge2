@@ -20,7 +20,7 @@ public class DataWriter {
     public void writeData(ArrayList<Plan> planList){
         char separator = ',';
         try {
-           fw = new FileWriter("C:\\Users\\Mart\\Desktop\\temp folder\\swdespa calendar\\DesignChallenge2\\src\\designchallenge2\\Event List.csv");
+           fw = new FileWriter("F:\\Documents\\NetBeansProjects\\DesignChallenge2\\src\\designchallenge2\\Event List.csv");
             
             for(int i = 0; i < planList.size(); i++){
                 fw.append(planList.get(i).getString(separator)); 

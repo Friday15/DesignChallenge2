@@ -14,5 +14,5 @@ import java.util.ArrayList;
 abstract public class DataParser {
     abstract void readData();
     abstract void readData(String name);
-    abstract ArrayList getEvents();
+    abstract ArrayList getPlans();
 }
