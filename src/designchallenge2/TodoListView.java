@@ -311,32 +311,25 @@ public class TodoListView extends javax.swing.JFrame implements MViewController,
         
     }
 
-    @Override
-    public void modelUpdated(ModelVC model) {
-        cm = ((CalendarModel)model);
-        resetSlots();                                                           
+    
+    public void EventFill(CalendarModel cm, Plan tempPlan, int i){
+        int tempDaysBetweenSize = tempPlan.getDaysBetween().size();
+        int tempDay = Integer.parseInt(tempPlan.getDay());
         
-        for(int i = 0;i < cm.getPlanList().size();i++){
-            int tempDay = Integer.parseInt(((Plan)cm.getPlanList().get(i)).getDay());
-            
-            
-            if(((Plan)cm.getPlanList().get(i)) instanceof Event){                               //checks if instance of event
-                int tempDaysBetweenSize = ((Plan)cm.getPlanList().get(i)).getDaysBetween().size();
-                
                 for(int d = 0;d < tempDaysBetweenSize;d++){             //check daysBetween for match
-                    int dayWithinRange = ((Plan)cm.getPlanList().get(i)).getDaysBetween().get(d);
+                    int dayWithinRange = tempPlan.getDaysBetween().get(d);
                     
                     if(cm.dayToday == dayWithinRange){
 
                         for(int j = 0;j < slots.size();j++){                                                    //increments over slots
-                            int tempMin = Integer.parseInt(((Plan)cm.getPlanList().get(i)).getMin());
-                            int tempHour = Integer.parseInt(((Plan)cm.getPlanList().get(i)).getHour());  
+                            int tempMin = Integer.parseInt(tempPlan.getMin());
+                            int tempHour = Integer.parseInt(tempPlan.getHour());  
 
                             if(tempHour == j){
-                                int tempEndMin = Integer.parseInt(((Plan)cm.getPlanList().get(i)).getEMin());
-                                int tempEndHour = Integer.parseInt(((Plan)cm.getPlanList().get(i)).getEHour());
-                                int tempEndDay = Integer.parseInt(((Plan)cm.getPlanList().get(i)).getEDay());
-                                Date tempEndDate = ((Plan)cm.getPlanList().get(i)).getEndDate();
+                                int tempEndMin = Integer.parseInt(tempPlan.getEMin());
+                                int tempEndHour = Integer.parseInt(tempPlan.getEHour());
+                                int tempEndDay = Integer.parseInt(tempPlan.getEDay());
+                                Date tempEndDate = tempPlan.getEndDate();
 
                                 if(tempDay < tempEndDay){
                                     if(tempDay == dayWithinRange){
@@ -369,6 +362,21 @@ public class TodoListView extends javax.swing.JFrame implements MViewController,
                         }
                     }
                 }
+    }
+    
+    @Override
+    public void modelUpdated(ModelVC model) {
+        cm = ((CalendarModel)model);
+        resetSlots();                                                           
+        
+        for(int i = 0;i < cm.getPlanList().size();i++){
+            Plan tempPlan = ((Plan)cm.getPlanList().get(i));
+            
+ 
+            if(tempPlan instanceof Event){                               //checks if instance of event
+                EventFill(cm, tempPlan, i);
+            }else if(tempPlan instanceof Task){
+                
             }                                             
         } 
     }

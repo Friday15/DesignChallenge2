@@ -111,23 +111,23 @@ public class CalendarModel implements ModelVC{
     public void addNewEvent(Event eve){
         System.out.println("potato event");
         events.add(eve);
-        for(int i = 0;i < getDaysBetweenDates(eve.getStartDate(), eve.getEndDate()).size();i++){
-            addNewTakenDate(getDaysBetweenDates(eve.getStartDate(), eve.getEndDate()).get(i));
-        }  
+//        for(int i = 0;i < getDaysBetweenDates(eve.getStartDate(), eve.getEndDate()).size();i++){
+//            addNewTakenDate(getDaysBetweenDates(eve.getStartDate(), eve.getEndDate()).get(i));
+//        }  
     }
     
     public void addNewTask(Task t){
         tasks.add(t);
-        addNewTakenDate(t.getStartDate());
+        //addNewTakenDate(t.getStartDate());
     }
     
     public void addNewPlan(Plan p){
         plans.add(p);
     }
     
-    public void addNewTakenDate(Date d){
-        takenDates.add(d);
-    }
+//    public void addNewTakenDate(Date d){
+//        takenDates.add(d);
+//    }
     
     public ArrayList getEventList(){
         return this.events;

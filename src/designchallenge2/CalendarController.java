@@ -169,7 +169,7 @@ public class CalendarController {
                         cm.addNewEvent(newEvent);
                         cm.addNewPlan(newEvent);
                     } catch (Exception ex) {
-                        System.out.println("submit "+ex);
+                        System.out.println("exception "+ex);
                         ex.printStackTrace();
                     } 
                 }
