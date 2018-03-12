@@ -43,7 +43,6 @@ public class CalendarController {
                         int row = calP.calendarTable.getSelectedRow();  
                         if(calP.calendarTable.getValueAt(row, col) != null){
                             cm.dayToday = (int) calP.calendarTable.getValueAt(row, col);
-                            System.out.println("after click "+cm.dayToday);
                             cm.updateViews();
                         }
                         
@@ -148,7 +147,7 @@ public class CalendarController {
                         Date start=new SimpleDateFormat("MM/dd/yyyy/HH/mm/ss").parse(STask);
                         
                         Task newTask= new Task(eview.getDName(),start);
-                        System.out.println("submit" + newTask.getName());
+
                         cm.addNewTask(newTask);
                         cm.addNewPlan(newTask);
                     } catch (Exception ex) {
@@ -165,8 +164,7 @@ public class CalendarController {
                         Date End=new SimpleDateFormat("MM/dd/yyyy/HH/mm/ss").parse(EEvent);
                         System.out.println(start+" To "+End);
                         Event newEvent= new Event(eview.getDName(), start, End);
-                        System.out.println("event date" + newEvent.getStartDate());
-                        System.out.println("submit" +newEvent.getName());
+
                         cm.addNewEvent(newEvent);
                         cm.addNewPlan(newEvent);
                     } catch (Exception ex) {

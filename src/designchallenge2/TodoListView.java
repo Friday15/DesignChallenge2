@@ -349,6 +349,48 @@ public class TodoListView extends javax.swing.JFrame implements MViewController,
             
         }
     }
+    
+    void DayFill(int start, int end, int planNum, int tempMin, int tempEndMin){
+        System.out.println("start " + start);
+        
+        int slotNum = start*2;
+        if(tempMin == 30)
+            slotNum += 1;
+        
+        if(tempEndMin == 30)
+            end += 1;
+            
+        for(int k = slotNum;k < end;k++){
+            if(k == slotNum){
+                slots.get(k).setPlan(((Plan)cm.getPlanList().get(planNum)));
+
+                slots.get(k).setEnabled(true);
+                slots.get(k).setContentAreaFilled(true);
+
+                if(slots.get(k).getPlan().getDone()==true)
+                    slots.get(k).planEnded();
+                
+                this.revalidate();
+                this.repaint();
+            }else{
+                if(k > start*2){
+                    slots.get(k).setPlan(((Plan)cm.getPlanList().get(planNum)));
+
+                    slots.get(k).setEnabled(true);
+                    slots.get(k).setContentAreaFilled(true);
+
+                    if(slots.get(k).getPlan().getDone()==true)
+                        slots.get(k).planEnded();
+
+                    this.revalidate();
+                    this.repaint();
+                }
+                
+            }
+            
+        }
+    }
+    
     void SingleFill(int slot, int planNum, int minute){
         int slotNum = slot*2;
         if(minute == 30)
@@ -417,36 +459,19 @@ public class TodoListView extends javax.swing.JFrame implements MViewController,
 
                             }else if(tempEndDay == dayWithinRange){
                                 if(tempEndMin == 30){
-                                     DayFill(0, tempEndHour*2+1, i);
+                                     DayFill(0, tempEndHour*2+1, i, tempMin);
                                      break;
                                      
                                 }else{
-                                    DayFill(0, tempEndHour*2, i);
+                                    DayFill(0, tempEndHour*2, i, tempMin);
                                     break;
                                 }
                                     
                             }    
                         }else{
                             if(tempHour < tempEndHour){
-                                if(tempMin == 30){
-                                    DayFill(tempHour+1, tempEndHour*2, i);
-                                    break;
-                                }
-                                    
-                                else if(tempMin == 0){
-                                    DayFill(tempHour, tempEndHour*2, i);
-                                    break;
-                                }
-                                    
-                                if(tempEndMin == 30){
-                                    DayFill(tempHour, tempEndHour*2+1, i);
-                                    break;
-                                }
-                                    
-                                else if(tempEndMin == 0){
-                                    DayFill(tempHour, tempEndHour*2, i);    
-                                    break;
-                                }
+                                    DayFill(tempHour, tempEndHour*2, i, tempMin, tempEndMin);
+                                    break;       
                                     
                             }else{
                                 if(tempMin < tempEndMin){
