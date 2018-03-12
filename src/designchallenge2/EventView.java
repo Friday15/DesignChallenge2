@@ -353,7 +353,7 @@ public class EventView extends javax.swing.JFrame {
         return Integer.toString(Hour.getSelectedIndex());
     }
     public String getDMin(){
-        return Integer.toString(Min.getSelectedIndex());
+        return Integer.toString(Min.getSelectedIndex()*30);
     }
     //resetter
     public void reset(){
@@ -396,7 +396,7 @@ public class EventView extends javax.swing.JFrame {
         return Integer.toString(EndHour.getSelectedIndex());
     }
     public String getEndMin(){
-        return Integer.toString(EndMin.getSelectedIndex());
+        return Integer.toString(EndMin.getSelectedIndex()*30);
     }
     public boolean isTask(){
         return Task.isSelected();

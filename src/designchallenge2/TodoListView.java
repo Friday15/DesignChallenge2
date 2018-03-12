@@ -12,7 +12,9 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Date;
 import javax.swing.BorderFactory;
+import javax.swing.JCheckBox;
 import javax.swing.JLabel;
+import javax.swing.JRadioButton;
 
 /**
  *
@@ -79,8 +81,6 @@ public class TodoListView extends javax.swing.JFrame implements MViewController,
         PlannerPane = new javax.swing.JPanel();
         dateLabel = new javax.swing.JLabel();
         viewLabel = new javax.swing.JLabel();
-        eventRadio = new javax.swing.JRadioButton();
-        taskRadio = new javax.swing.JRadioButton();
         dayButton = new javax.swing.JButton();
         agendaButton = new javax.swing.JButton();
         Create = new javax.swing.JButton();
@@ -95,6 +95,8 @@ public class TodoListView extends javax.swing.JFrame implements MViewController,
         jScrollPane2 = new javax.swing.JScrollPane();
         agendaTime = new javax.swing.JTextArea();
         saikouNoPlanner = new javax.swing.JLabel();
+        eventCheck = new javax.swing.JCheckBox();
+        taskCheck = new javax.swing.JCheckBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -103,12 +105,6 @@ public class TodoListView extends javax.swing.JFrame implements MViewController,
         dateLabel.setText("DATE HERE");
 
         viewLabel.setText("View");
-
-        viewGroup.add(eventRadio);
-        eventRadio.setText("Event");
-
-        viewGroup.add(taskRadio);
-        taskRadio.setText("Task");
 
         dayButton.setText("DAY");
         dayButton.addActionListener(new java.awt.event.ActionListener() {
@@ -184,6 +180,10 @@ public class TodoListView extends javax.swing.JFrame implements MViewController,
 
         saikouNoPlanner.setText("Saikou no Planner");
 
+        eventCheck.setText("Event");
+
+        taskCheck.setText("Task");
+
         javax.swing.GroupLayout PlannerPaneLayout = new javax.swing.GroupLayout(PlannerPane);
         PlannerPane.setLayout(PlannerPaneLayout);
         PlannerPaneLayout.setHorizontalGroup(
@@ -201,11 +201,10 @@ public class TodoListView extends javax.swing.JFrame implements MViewController,
             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, PlannerPaneLayout.createSequentialGroup()
                 .addGap(39, 39, 39)
                 .addGroup(PlannerPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(PlannerPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(eventRadio, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(viewLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(taskRadio, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(Create, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(viewLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Create, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(eventCheck)
+                    .addComponent(taskCheck))
                 .addGap(37, 37, 37)
                 .addComponent(viewPane, javax.swing.GroupLayout.PREFERRED_SIZE, 677, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 50, Short.MAX_VALUE))
@@ -228,9 +227,9 @@ public class TodoListView extends javax.swing.JFrame implements MViewController,
                         .addGap(107, 107, 107)
                         .addComponent(viewLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(eventRadio)
+                        .addComponent(eventCheck)
                         .addGap(18, 18, 18)
-                        .addComponent(taskRadio)
+                        .addComponent(taskCheck)
                         .addGap(169, 169, 169))
                     .addGroup(PlannerPaneLayout.createSequentialGroup()
                         .addGap(39, 39, 39)
@@ -266,6 +265,12 @@ public class TodoListView extends javax.swing.JFrame implements MViewController,
         dayButton.setEnabled(true);
     }//GEN-LAST:event_agendaButtonActionPerformed
 
+    
+    public void addCheckListener(ActionListener al){
+        eventCheck.addActionListener(al);
+        taskCheck.addActionListener(al);
+    } 
+    
     public void addSlotsListener(ActionListener al){
         for(int i = 0;i < slots.size();i++){
             slots.get(i).addActionListener(al);
@@ -273,10 +278,9 @@ public class TodoListView extends javax.swing.JFrame implements MViewController,
     }
    
     
-    void DayFill(int start, int end, int planNum, int minute){
+    void DayFill(int start, int end, int planNum){
         System.out.println("start " + start);
-        if(minute == 30)
-            start += 1;
+            
         for(int k = start;k < end;k++){
             if(k == start){
                 slots.get(k*2).setPlan(((Plan)cm.getPlanList().get(planNum)));
@@ -306,16 +310,53 @@ public class TodoListView extends javax.swing.JFrame implements MViewController,
         }
     }
     
+    void DayFill(int start, int end, int planNum, int tempMin){
+        System.out.println("start " + start);
+        
+        int slotNum = start*2;
+        if(tempMin == 30)
+            slotNum += 1;
+        
+        for(int k = slotNum;k < end;k++){
+            if(k == slotNum){
+                slots.get(k).setPlan(((Plan)cm.getPlanList().get(planNum)));
+                String tempName = slots.get(k).getPlan().getColoredName();
+
+                slots.get(k).setEnabled(true);
+                slots.get(k).setContentAreaFilled(true);
+                slots.get(k).setText(tempName);
+
+                this.revalidate();
+                this.repaint();
+            }else{
+                if(k > start*2){
+                    slots.get(k).setPlan(((Plan)cm.getPlanList().get(planNum)));
+                    String tempName = slots.get(k).getPlan().getColoredName();
+
+                    slots.get(k).setEnabled(true);
+                    slots.get(k).setContentAreaFilled(true);
+                    slots.get(k).setText(tempName);
+
+                    this.revalidate();
+                    this.repaint();
+                }
+                
+            }
+            
+        }
+    }
     void SingleFill(int slot, int planNum, int minute){
+        int slotNum = slot*2;
         if(minute == 30)
-            slot += 1;
+            slotNum += 1;
 
-        slots.get(slot*2).setPlan(((Plan)cm.getPlanList().get(planNum)));
-        String tempName = slots.get(slot*2).getPlan().getColoredName();
+        
+        slots.get(slotNum).setPlan(((Plan)cm.getPlanList().get(planNum)));
+        String tempName = slots.get(slotNum).getPlan().getColoredName();
 
-        slots.get(slot*2).setEnabled(true);
-        slots.get(slot*2).setContentAreaFilled(true);
-        slots.get(slot*2).setText(tempName);
+        slots.get(slotNum).setEnabled(true);
+        slots.get(slotNum).setContentAreaFilled(true);
+        slots.get(slotNum).setText(tempName);
 
         this.revalidate();
         this.repaint();
@@ -335,7 +376,7 @@ public class TodoListView extends javax.swing.JFrame implements MViewController,
             for(int j = 0;j < slots.size();j++){                                                    //increments over slots
                 int tempMin = Integer.parseInt(tempPlan.getMin());
                 int tempHour = Integer.parseInt(tempPlan.getHour()); 
-
+ 
                 if(tempHour == j){
                     SingleFill(j, planNum, tempMin);
                 }
@@ -346,45 +387,68 @@ public class TodoListView extends javax.swing.JFrame implements MViewController,
     public void EventFill(CalendarModel cm, Plan tempPlan, int i){
         int tempDaysBetweenSize = tempPlan.getDaysBetween().size();
         int tempDay = Integer.parseInt(tempPlan.getDay());
-        
+        int tempMin = Integer.parseInt(tempPlan.getMin());
+        int tempHour = Integer.parseInt(tempPlan.getHour());  
+        int tempEndMin = Integer.parseInt(tempPlan.getEMin());
+        int tempEndHour = Integer.parseInt(tempPlan.getEHour());
+        int tempEndDay = Integer.parseInt(tempPlan.getEDay());
+
+                        
         for(int d = 0;d < tempDaysBetweenSize;d++){             //check daysBetween for match
             int dayWithinRange = tempPlan.getDaysBetween().get(d);
 
             if(cm.dayToday == dayWithinRange){
 
                 for(int j = 0;j < slots.size();j++){                                                    //increments over slots
-                    int tempMin = Integer.parseInt(tempPlan.getMin());
-                    int tempHour = Integer.parseInt(tempPlan.getHour());  
-
+                    
                     if(tempHour == j){
-                        int tempEndMin = Integer.parseInt(tempPlan.getEMin());
-                        int tempEndHour = Integer.parseInt(tempPlan.getEHour());
-                        int tempEndDay = Integer.parseInt(tempPlan.getEDay());
-                        Date tempEndDate = tempPlan.getEndDate();
-
+                        
                         if(tempDay < tempEndDay){
                             if(tempDay == dayWithinRange){
                                 DayFill(j, slots.size(), i, tempMin);
-                                break;
 
                             }else if(dayWithinRange > tempDay && dayWithinRange < tempEndDay){
-                                DayFill(0, slots.size(), i, tempMin);
-                                break;
+                                DayFill(0, slots.size(), i);                   //take out minutes
 
                             }else if(tempEndDay == dayWithinRange){
-                                DayFill(0, tempEndHour, i, tempMin);
-                                break;
+                                if(tempEndMin == 30){
+                                     DayFill(0, tempEndHour*2+1, i);
+                                     break;
+                                     
+                                }else{
+                                    DayFill(0, tempEndHour*2, i);
+                                    break;
+                                }
+                                    
                             }    
                         }else{
                             if(tempHour < tempEndHour){
-                                DayFill(tempHour, tempEndHour, i, tempMin);
-                                break;
+                                if(tempMin == 30){
+                                    DayFill(tempHour+1, tempEndHour*2, i);
+                                    break;
+                                }
+                                    
+                                else if(tempMin == 0){
+                                    DayFill(tempHour, tempEndHour*2, i);
+                                    break;
+                                }
+                                    
+                                if(tempEndMin == 30){
+                                    DayFill(tempHour, tempEndHour*2+1, i);
+                                    break;
+                                }
+                                    
+                                else if(tempEndMin == 0){
+                                    DayFill(tempHour, tempEndHour*2, i);    
+                                    break;
+                                }
+                                    
                             }else{
                                 if(tempMin < tempEndMin){
-                                    DayFill(tempHour, tempHour+1, i, tempMin);
+                                    DayFill(tempHour, tempHour+1, i);
                                     break;
                                 }else{
-                                    DayFill(tempHour, tempHour, i, tempMin);
+                                    DayFill(tempHour, tempHour, i);
                                     break;
                                 }
                             }
@@ -394,7 +458,6 @@ public class TodoListView extends javax.swing.JFrame implements MViewController,
             }
         }
     }
-    
     @Override
     public void modelUpdated(ModelVC model) {
         cm = ((CalendarModel)model);
@@ -403,12 +466,23 @@ public class TodoListView extends javax.swing.JFrame implements MViewController,
         for(int i = 0;i < cm.getPlanList().size();i++){
             Plan tempPlan = ((Plan)cm.getPlanList().get(i));
             
- 
-            if(tempPlan instanceof Event){                               //checks if instance of event
-                EventFill(cm, tempPlan, i);
-            }else if(tempPlan instanceof Task){
-                TaskFill(cm, tempPlan, i);
-            }                                             
+            if(eventCheck.isSelected()){
+                if(tempPlan instanceof Event)
+                    EventFill(cm, tempPlan, i);
+            }
+            if(taskCheck.isSelected()){
+                if(tempPlan instanceof Task)
+                    TaskFill(cm, tempPlan, i);
+            }
+            
+            if(eventCheck.isSelected() == false && taskCheck.isSelected() == false){
+                if(tempPlan instanceof Event){                               //checks if instance of event
+                    EventFill(cm, tempPlan, i);
+                }else if(tempPlan instanceof Task){
+                    TaskFill(cm, tempPlan, i);
+                }  
+            }
+                                                       
         } 
     }
     
@@ -420,6 +494,13 @@ public class TodoListView extends javax.swing.JFrame implements MViewController,
         }
     }
     
+    public JCheckBox getEventCheck(){
+        return this.eventCheck;      
+    }
+    
+    public JCheckBox getTaskCheck(){
+        return this.taskCheck;
+    }
     /**
      * @param args the command line arguments
      */
@@ -466,12 +547,12 @@ public class TodoListView extends javax.swing.JFrame implements MViewController,
     private javax.swing.JLabel dateLabel;
     private javax.swing.JButton dayButton;
     private javax.swing.JScrollPane dayPane;
-    private javax.swing.JRadioButton eventRadio;
+    private javax.swing.JCheckBox eventCheck;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSplitPane jSplitPane;
     private javax.swing.JLabel saikouNoPlanner;
-    private javax.swing.JRadioButton taskRadio;
+    private javax.swing.JCheckBox taskCheck;
     private javax.swing.JPanel timePanel;
     private javax.swing.ButtonGroup viewGroup;
     private javax.swing.JLabel viewLabel;

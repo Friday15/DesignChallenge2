@@ -56,6 +56,7 @@ public class CalendarController {
         this.eview.PSVListener(new PSVListen());
         this.tlv.CreateListener(new CreateListen());
         this.tlv.addSlotsListener(new SlotsListen());
+        this.tlv.addCheckListener(new CheckListen());
         this.mpv.addBackListener(new BackListen());
         this.mpv.addDoneListener(new DoneListen());
         
@@ -218,7 +219,7 @@ public class CalendarController {
                         Date endDate = ((Plan)cm.getPlanList().get(i)).getEndDate();
                         mpv.setPlanTexts(name, startDate, endDate);
                     }else{
-                        
+                        mpv.setPlanTexts(name, startDate);
                     }
                         
                         
@@ -239,5 +240,15 @@ public class CalendarController {
                 pb.planEnded();
                 mpv.setVisible(false);
             }
+        }
+        
+        class CheckListen implements ActionListener{
+
+        @Override
+        public void actionPerformed(ActionEvent ae) {
+
+            cm.updateViews();
+        }
+            
         }
 }

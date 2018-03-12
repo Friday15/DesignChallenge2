@@ -177,6 +177,12 @@ public class ModifyPlanView extends javax.swing.JFrame {
         EndDateField.setText(endDate.toString());
     }
     
+    void setPlanTexts(String name, Date startDate){
+        TitleField.setText(name);
+        StartDateField.setText(startDate.toString());
+        EndDateField.setEnabled(false);
+    }
+    
     void resetTexts(){
         TitleField.setText("");
         StartDateField.setText("");
