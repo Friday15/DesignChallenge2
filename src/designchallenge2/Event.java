@@ -15,8 +15,8 @@ import java.util.Date;
  */
 public class Event extends Plan{                                                            //The specs of the event itself
     private boolean shown;
-    public Event(String name, Date S, Date E){
-        super(name, S, E);
+    public Event(String name, Date S, Date E, Boolean D){
+        super(name, S, E, D);
         shown = false;
     }
     

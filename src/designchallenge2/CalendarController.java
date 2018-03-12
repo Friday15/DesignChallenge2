@@ -62,8 +62,7 @@ public class CalendarController {
         this.cm.attachModelListener(calP);
         this.cm.attachModelListener(tlv);
         
-        
-        cm.updateViews();
+        calP.refreshCalendar(cm.monthToday, cm.yearToday);
         tlv.setVisible(true);
     }
     
@@ -147,7 +146,7 @@ public class CalendarController {
                         String STask = eview.getDMonth()+"/"+eview.getDDay()+"/"+calP.getDYear()+"/"+eview.getDHour()+"/"+eview.getDMin()+"/00";    
                         Date start=new SimpleDateFormat("MM/dd/yyyy/HH/mm/ss").parse(STask);
                         
-                        Task newTask= new Task(eview.getDName(),start);
+                        Task newTask= new Task(eview.getDName(),start,false);
 
                         cm.addNewTask(newTask);
                         cm.addNewPlan(newTask);
@@ -164,7 +163,7 @@ public class CalendarController {
                         String EEvent = eview.getEndMonth()+"/"+eview.getEndDay()+"/"+calP.getDYear()+"/"+eview.getEndHour()+"/"+eview.getEndMin()+"/00";   
                         Date End=new SimpleDateFormat("MM/dd/yyyy/HH/mm/ss").parse(EEvent);
                         System.out.println(start+" To "+End);
-                        Event newEvent= new Event(eview.getDName(), start, End);
+                        Event newEvent= new Event(eview.getDName(), start, End,false);
 
                         cm.addNewEvent(newEvent);
                         cm.addNewPlan(newEvent);
@@ -174,7 +173,7 @@ public class CalendarController {
                     } 
                 }
                 //add newevent to some array list
-                //cm.dw.writeData(cm.getEventList());                                //writes to Event List.csv
+                cm.dw.writeData(cm.getEventList());                                //writes to Event List.csv
                 
                 eview.reset();
                 eview.setVisible(false);//only use it if date is actaully useable
@@ -270,6 +269,7 @@ public class CalendarController {
                         }    
                     }  
                 }
+                cm.dw.writeData(cm.getEventList()); 
                 cm.updateViews();
             }
         }
@@ -305,7 +305,9 @@ public class CalendarController {
                     }  
                 }
                 pb.getPlan().markedDone();
+                cm.dw.writeData(cm.getEventList()); 
                 cm.updateViews();
+                
             }
             
         }

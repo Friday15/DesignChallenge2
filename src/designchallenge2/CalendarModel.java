@@ -65,7 +65,7 @@ public class CalendarModel implements ModelVC{
         
         cdp.readData();                                                         //Reads data from csv immediately
         pdp.readData();
-//        CSVreaderToModel(cdp.getEvents());
+        CSVreaderToModel(cdp.getEvents());
 //        PSVreaderToModel(pdp.getEvents());
     }
    
@@ -78,13 +78,35 @@ public class CalendarModel implements ModelVC{
         }
     }
     
-//    void CSVreaderToModel(ArrayList <String []> eventsRead){
-//        for(int i = 0; i < eventsRead.size(); i++){
-//            String [] dates = eventsRead.get(i)[0].split("/");                  //in the csv date was all in one string separated by /
-//            addNewEvent(new Event(eventsRead.get(i)[1], eventsRead.get(i)[2], dates[0], dates[1], dates[2]));
-//        }
-//        
-//    }
+    void CSVreaderToModel(ArrayList <String []> eventsRead){
+        for(int i = 0; i < eventsRead.size(); i++){
+            try {
+                String Sdates = eventsRead.get(i)[3];                  //in the csv date was all in one string separated by /
+                Date start=new SimpleDateFormat("MM/dd/yyyy/HH/mm").parse(Sdates);
+                String Edates = eventsRead.get(i)[4];
+                Date end=new SimpleDateFormat("MM/dd/yyyy/HH/mm").parse(Edates);
+                Boolean done;
+                if(eventsRead.get(i)[2].equals("1"))
+                    done = true;
+                else
+                    done = false;
+                if(eventsRead.get(i)[1].equals("T")){
+                    Task newTask = new Task(eventsRead.get(i)[0],start,done);
+                    addNewPlan(newTask);
+                    addNewTask(newTask);
+                }else{
+                    Event newEvent = new Event(eventsRead.get(i)[0],start,end,done);
+                    addNewPlan(newEvent);
+                    addNewEvent(newEvent);
+                }
+                 //0 name 1 (T)askor(E)vent 2 done(1)ornot(0) 3 startdate 4 enddate
+            } catch (Exception ex) {
+                System.out.println(ex);
+                System.out.println("CSVreaderToModel");//error handling
+            }
+        }
+        
+    }
 //     void PSVreaderToModel(ArrayList <String []> eventsRead){
 //        for(int i = 0; i < eventsRead.size(); i++){
 //            String [] dates = eventsRead.get(i)[1].split("/");                  //in the psv date was all in one string separated by /

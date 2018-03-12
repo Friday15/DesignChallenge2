@@ -14,24 +14,16 @@ import java.util.ArrayList;
  * @author Ashen One
  */
 //F:\\Documents\\NetBeansProjects\\DesignChallenge1\\src\\designchallenge1\\Event List.csv
-//C:\\Users\\Mart\\Desktop\\temp folder\\swdespa calendar\\DesignChallenge1\\src\\designchallenge1\\Event List.csv
+//C:\\Users\\Mart\\Desktop\\temp folder\\swdespa calendar\\DesignChallenge2\\src\\designchallenge2\\Event List.csv
 public class DataWriter {
     FileWriter fw = null;
-    public void writeData(ArrayList<Event> eventList){
+    public void writeData(ArrayList<Plan> planList){
         char separator = ',';
         try {
-           fw = new FileWriter("C:\\Users\\Mart\\Desktop\\temp folder\\swdespa calendar\\DesignChallenge1\\src\\designchallenge1\\Event List.csv");
+           fw = new FileWriter("C:\\Users\\Mart\\Desktop\\temp folder\\swdespa calendar\\DesignChallenge2\\src\\designchallenge2\\Event List.csv");
             
-            for(int i = 0; i < eventList.size(); i++){
-                fw.append(eventList.get(i).getMonth());
-                fw.append('/');
-                fw.append(eventList.get(i).getDay());
-                fw.append('/');
-                fw.append(eventList.get(i).getYear());
-                fw.append(separator);
-                fw.append(eventList.get(i).getName());
-                fw.append(separator);
-                
+            for(int i = 0; i < planList.size(); i++){
+                fw.append(planList.get(i).getString(separator)); 
                 fw.append("\n");
                 
             }

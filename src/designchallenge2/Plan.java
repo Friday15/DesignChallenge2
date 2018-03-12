@@ -30,12 +30,11 @@ abstract public class Plan {
     private final String EDay;
     private final String EHour;
     private final String EMin;
-    private String ColoredName;
     private ArrayList <Integer> daysBetween;
     private boolean done;
     
-    public Plan(String name ,Date s, Date e){
-        done = false;
+    public Plan(String name ,Date s, Date e,Boolean d){
+        done = d;
         daysBetween = new ArrayList();
         this.name = name;
         StartDate = s;
@@ -60,12 +59,11 @@ abstract public class Plan {
         int iday2 = Integer.parseInt(EDay);
         for(int i=iday1;i<=iday2;i++){
             daysBetween.add(i);
-
         }
 
         
         }
-    public Plan(String name ,Date s){
+    public Plan(String name ,Date s, Boolean d){
         done = false;
         this.name = name;
         StartDate = s;
@@ -94,18 +92,13 @@ abstract public class Plan {
     public String getName(){
         return name;
     }
-    public void setColoredName(String s){
-        this.ColoredName=s;
-    }
-    public String getColoredName(){
-        return ColoredName;
-    }
     public Date getStartDate(){
         return StartDate;
     }
     public Date getEndDate(){
         return EndDate;
     }
+    
     
     public boolean getDone(){
         return done;
@@ -147,6 +140,28 @@ abstract public class Plan {
     }
     public String getEMin(){
         return EMin;
+    }
+    public String StartString(){
+        String s="/";
+        return Month+s+Day+s+Year+s+Hour+s+Min;
+    }
+    public String EndString(){
+        String s="/";
+        return EMonth+s+EDay+s+EYear+s+EHour+s+EMin;
+    }
+    public String getString(char separator){
+        String isTask;
+        if(this instanceof Task)
+            isTask="T";
+        else
+            isTask="E";
+        String isDone;
+        if(done)
+            isDone="1";
+        else
+            isDone="0";
+        return name+separator+isTask+separator+isDone+separator+StartString()+separator+EndString();
+        //0 name 1 (T)askor(E)vent 2 done(1)ornot(0) 3 startdate 4 enddate
     }
     
 }

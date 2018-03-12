@@ -13,8 +13,8 @@ import java.util.Date;
  */
 public class Task extends Plan{
     
-    public Task(String name, Date s){
-        super(name, s);
+    public Task(String name, Date s,Boolean d){
+        super(name, s, d);
     }
     
 }
