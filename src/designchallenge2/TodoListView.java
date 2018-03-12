@@ -284,23 +284,25 @@ public class TodoListView extends javax.swing.JFrame implements MViewController,
         for(int k = start;k < end;k++){
             if(k == start){
                 slots.get(k*2).setPlan(((Plan)cm.getPlanList().get(planNum)));
-                String tempName = slots.get(k*2).getPlan().getColoredName();
 
                 slots.get(k*2).setEnabled(true);
                 slots.get(k*2).setContentAreaFilled(true);
-                slots.get(k*2).setText(tempName);
 
+                if(slots.get(k*2).getPlan().getDone()==true)
+                        slots.get(k*2).planEnded();
+                
                 this.revalidate();
                 this.repaint();
             }else{
                 if(k > start*2){
                     slots.get(k).setPlan(((Plan)cm.getPlanList().get(planNum)));
-                    String tempName = slots.get(k).getPlan().getColoredName();
 
                     slots.get(k).setEnabled(true);
                     slots.get(k).setContentAreaFilled(true);
-                    slots.get(k).setText(tempName);
 
+                    if(slots.get(k).getPlan().getDone()==true)
+                        slots.get(k).planEnded();
+                    
                     this.revalidate();
                     this.repaint();
                 }

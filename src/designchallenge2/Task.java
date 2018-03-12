@@ -12,18 +12,9 @@ import java.util.Date;
  * @author Ashen One
  */
 public class Task extends Plan{
-    private boolean done;
     
     public Task(String name, Date s){
         super(name, s);
-        done = false;
     }
     
-    public boolean getDone(){
-        return done;
-    }
-    
-    public void checkDone(){
-        done = true;
-    }
 }
