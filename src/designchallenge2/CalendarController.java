@@ -59,7 +59,7 @@ public class CalendarController {
         this.tlv.addCheckListener(new CheckListen());
         this.mpv.addBackListener(new BackListen());
         this.mpv.addDoneListener(new DoneListen());
-        
+        this.mpv.addRemoveListener(new RemoveListen());
         this.cm.attachModelListener(calP);
         this.cm.attachModelListener(tlv);
         
@@ -230,6 +230,51 @@ public class CalendarController {
         }
             
         }
+
+        
+        class CheckListen implements ActionListener{
+
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+
+                cm.updateViews();
+            }
+            
+        }
+        
+        class RemoveListen implements ActionListener{
+        /**
+         * does the action
+         * @param e contains the action performed
+         */
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                mpv.setVisible(false);
+                for(int i = 0;i<cm.getPlanList().size();i++){
+                    if(pb.getPlan()==cm.getPlanList().get(i)){
+                        cm.getPlanList().remove(i);
+                        System.out.println("Remove Plan");
+                    }    
+                }
+                if(pb.getPlan() instanceof Event){
+                    for(int i = 0;i<cm.getEventList().size();i++){
+                        if(pb.getPlan()==cm.getEventList().get(i)){
+                            cm.getEventList().remove(i);
+                            System.out.println("Remove Event");
+                        }    
+                    }
+                }else{
+                    for(int i = 0;i<cm.getTaskList().size();i++){
+                        if(pb.getPlan()==cm.getTaskList().get(i)){
+                            cm.getTaskList().remove(i);
+                            System.out.println("Remove Task");
+                        }    
+                    }  
+                }
+                cm.updateViews();
+            }
+        }
+        
         class DoneListen implements ActionListener{
         /**
          * does the action
@@ -237,18 +282,32 @@ public class CalendarController {
          */
             @Override
             public void actionPerformed(ActionEvent e) {
-                pb.planEnded();
+                //pb.planEnded();
                 mpv.setVisible(false);
+                for(int i = 0;i<cm.getPlanList().size();i++){
+                    if(pb.getPlan()==cm.getPlanList().get(i)){
+                        ((Plan)cm.getPlanList().get(i)).markedDone();
+                        System.out.println("Done Plan");
+                    }    
+                }
+                if(pb.getPlan() instanceof Event){
+                    for(int i = 0;i<cm.getEventList().size();i++){
+                        if(pb.getPlan()==cm.getEventList().get(i)){
+                            ((Event)cm.getEventList().get(i)).markedDone();
+                            System.out.println("Done Event");
+                        }    
+                    }
+                }else{
+                    for(int i = 0;i<cm.getTaskList().size();i++){
+                        if(pb.getPlan()==cm.getTaskList().get(i)){
+                            ((Task)cm.getTaskList().get(i)).markedDone();
+                            System.out.println("Done Task");
+                        }    
+                    }  
+                }
+                pb.getPlan().markedDone();
+                cm.updateViews();
             }
-        }
-        
-        class CheckListen implements ActionListener{
-
-        @Override
-        public void actionPerformed(ActionEvent ae) {
-
-            cm.updateViews();
-        }
             
         }
 }

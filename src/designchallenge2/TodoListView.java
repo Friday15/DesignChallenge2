@@ -320,22 +320,24 @@ public class TodoListView extends javax.swing.JFrame implements MViewController,
         for(int k = slotNum;k < end;k++){
             if(k == slotNum){
                 slots.get(k).setPlan(((Plan)cm.getPlanList().get(planNum)));
-                String tempName = slots.get(k).getPlan().getColoredName();
 
                 slots.get(k).setEnabled(true);
                 slots.get(k).setContentAreaFilled(true);
-                slots.get(k).setText(tempName);
 
+                if(slots.get(k).getPlan().getDone()==true)
+                    slots.get(k).planEnded();
+                
                 this.revalidate();
                 this.repaint();
             }else{
                 if(k > start*2){
                     slots.get(k).setPlan(((Plan)cm.getPlanList().get(planNum)));
-                    String tempName = slots.get(k).getPlan().getColoredName();
 
                     slots.get(k).setEnabled(true);
                     slots.get(k).setContentAreaFilled(true);
-                    slots.get(k).setText(tempName);
+
+                    if(slots.get(k).getPlan().getDone()==true)
+                        slots.get(k).planEnded();
 
                     this.revalidate();
                     this.repaint();
@@ -352,12 +354,13 @@ public class TodoListView extends javax.swing.JFrame implements MViewController,
 
         
         slots.get(slotNum).setPlan(((Plan)cm.getPlanList().get(planNum)));
-        String tempName = slots.get(slotNum).getPlan().getColoredName();
 
         slots.get(slotNum).setEnabled(true);
         slots.get(slotNum).setContentAreaFilled(true);
-        slots.get(slotNum).setText(tempName);
 
+        if(slots.get(slotNum).getPlan().getDone()==true)
+            slots.get(slotNum).planEnded();
+        
         this.revalidate();
         this.repaint();
 

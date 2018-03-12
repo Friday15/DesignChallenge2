@@ -33,8 +33,10 @@ abstract public class Plan {
     private String ColoredName;
     private ArrayList <Date> datesBetween;
     private ArrayList <Integer> daysBetween;
+    private boolean done;
     
     public Plan(String name ,Date s, Date e){
+        done = false;
         daysBetween = new ArrayList();
         this.name = name;
         StartDate = s;
@@ -66,6 +68,7 @@ abstract public class Plan {
         
         }
     public Plan(String name ,Date s){
+        done = false;
         this.name = name;
         StartDate = s;
         DateFormat df = new SimpleDateFormat("MM/dd/yyyy/HH/mm");
@@ -122,7 +125,12 @@ abstract public class Plan {
 //        return dates;
 //    }
     
-    
+    public boolean getDone(){
+        return done;
+    }
+    public void markedDone(){
+        done =true;
+    }
     public ArrayList<Date> getDatesBetween(){
         return this.datesBetween;
     }
@@ -161,5 +169,6 @@ abstract public class Plan {
     public String getEMin(){
         return EMin;
     }
+    
 }
     
