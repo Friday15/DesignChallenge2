@@ -10,6 +10,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 /**
@@ -27,7 +28,7 @@ public class CalendarController implements MVController{
     public CalendarController(final CalendarModel cm){
         this.calP = new CalendarProgramView(cm, this);
         this.eview = new EventView();
-        this.tlv = new TodoListView(cm);
+        this.tlv = new TodoListView(cm, this);
         this.mpv = new ModifyPlanView();
         this.cm = cm;
 
@@ -67,6 +68,27 @@ public class CalendarController implements MVController{
         tlv.setVisible(true);
     }
     
+    public ArrayList <Plan> sortedByHours (ArrayList<Plan> plans){
+        ArrayList<Plan> sortedList = new ArrayList();
+        Plan temp;
+        for(int k = 0;k < plans.size();k++){
+            sortedList.add(plans.get(k));
+        }
+        
+        for (int i = 1; i < plans.size(); i++) {
+            for(int j = i ; j > 0 ; j--){
+                if(Integer.parseInt(sortedList.get(j).getDay()) == Integer.parseInt(sortedList.get(j-1).getDay())){
+                    if(Integer.parseInt(sortedList.get(j).getHour()) < Integer.parseInt(sortedList.get(j-1).getHour())){
+                        temp = sortedList.get(j);
+                        sortedList.set(j, sortedList.get(j-1));
+                        sortedList.set(j-1, temp);
+                    }
+                } 
+            }
+        }
+        
+        return sortedList;
+    }
     
     class btnPrev_Action implements ActionListener
         {

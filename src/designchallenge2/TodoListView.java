@@ -29,11 +29,13 @@ public class TodoListView extends javax.swing.JFrame implements ModelListener {
     ArrayList <PlanButton> slots;
     ArrayList <JLabel> times;
     CalendarModel cm;
+    CalendarController cont;
     /**
      * Creates new form test
      */
-    public TodoListView(CalendarModel cm) {
+    public TodoListView(CalendarModel cm, CalendarController cont) {
         this.cm = cm;
+        this.cont = cont;
         initComponents();
         slots = new ArrayList();
         times = new ArrayList();
@@ -407,21 +409,22 @@ public class TodoListView extends javax.swing.JFrame implements ModelListener {
 
             if(cm.dayToday == dayWithinRange){
 
+                
                 updateAgenda((Event)tempPlan);
                 for(int j = 0;j < slots.size();j++){                                                    //increments over slots
                     
                     if(tempHour == j){
                         
-                        if(tempDay < tempEndDay){
-                            if(tempDay == dayWithinRange){
-                                DayFill(j, slots.size(), i, tempMin);
+                        if(tempDay < tempEndDay){                               //if it goes overnight or further
+                            if(tempDay == dayWithinRange){                      
+                                DayFill(j, slots.size(), i, tempMin);           //fill from start time till end of day
 
                             }else if(dayWithinRange > tempDay && dayWithinRange < tempEndDay){
-                                DayFill(0, slots.size(), i);                   //take out minutes
+                                DayFill(0, slots.size(), i);                   //fill entire day
 
                             }else if(tempEndDay == dayWithinRange){
                                 if(tempEndMin == 30){
-                                     DayFill(0, tempEndHour*2+1, i, tempMin);
+                                     DayFill(0, tempEndHour*2+1, i, tempMin);   //fill from start of day to end time
                                      break;
                                      
                                 }else{
@@ -432,11 +435,11 @@ public class TodoListView extends javax.swing.JFrame implements ModelListener {
                             }    
                         }else{
                             if(tempHour < tempEndHour){
-                                    DayFill(tempHour, tempEndHour*2, i, tempMin, tempEndMin);
+                                    DayFill(tempHour, tempEndHour*2, i, tempMin, tempEndMin);   //fill from start hour to end hour
                                     break;       
                                     
                             }else{
-                                if(tempMin < tempEndMin){
+                                if(tempMin < tempEndMin){                       //fill one slot
                                     DayFill(tempHour, tempHour+1, i);
                                     break;
                                 }else{
@@ -456,6 +459,8 @@ public class TodoListView extends javax.swing.JFrame implements ModelListener {
         resetSlots();                                                           
         resetAgenda();
         changeDateLabel(cm);
+        //ArrayList <Plan> tempPlans = cont.sortedByHours(cm.getPlanList());
+        
         for(int i = 0;i < cm.getPlanList().size();i++){
             Plan tempPlan = ((Plan)cm.getPlanList().get(i));
             
@@ -469,7 +474,7 @@ public class TodoListView extends javax.swing.JFrame implements ModelListener {
             }
             
             if(eventCheck.isSelected() == false && taskCheck.isSelected() == false){
-                if(tempPlan instanceof Event){                               //checks if instance of event
+                if(tempPlan instanceof Event){                               
                     EventFill(cm, tempPlan, i);
                 }else if(tempPlan instanceof Task){
                     TaskFill(cm, tempPlan, i);
@@ -542,7 +547,11 @@ public class TodoListView extends javax.swing.JFrame implements ModelListener {
         sb.append(tempHour);
         sb.append(": ").append(tempMin);
         sb.append(" - ").append(tempName).append("\n");
-        appendToAgenda(sb.toString(), Color.GREEN);
+        
+        if(plan.getDone() == true)
+            appendToAgenda(sb.toString(), Color.GRAY);
+        else
+            appendToAgenda(sb.toString(), Color.GREEN);
     }
     
     public void updateAgenda(Event event){
@@ -577,7 +586,10 @@ public class TodoListView extends javax.swing.JFrame implements ModelListener {
         sb.append(": ").append(tempEndMin);
         sb.append(" - ").append(tempName).append("\n");
         
-        appendToAgenda(sb.toString(), Color.BLUE);
+        if(event.getDone() == true)
+            appendToAgenda(sb.toString(), Color.GRAY);
+        else
+            appendToAgenda(sb.toString(), Color.BLUE);
 
     }
     
