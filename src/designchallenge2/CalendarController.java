@@ -16,7 +16,7 @@ import java.util.Date;
  *
  * @author Mart
  */
-public class CalendarController {
+public class CalendarController implements MVController{
     CalendarProgramView calP;
     CalendarModel cm;
     EventView eview;
@@ -142,15 +142,26 @@ public class CalendarController {
             
             @Override
             public void actionPerformed(ActionEvent e) {
+                boolean possible = true;
                 if(eview.isTask()){
                     try {
                         String STask = eview.getDMonth()+"/"+eview.getDDay()+"/"+calP.getDYear()+"/"+eview.getDHour()+"/"+eview.getDMin()+"/00";    
                         Date start=new SimpleDateFormat("MM/dd/yyyy/HH/mm/ss").parse(STask);
                         
-                        Task newTask= new Task(eview.getDName(),start,false);
+                        
+                        for(int i = 0;i < cm.getPlanList().size();i++){
+                            if(start.equals(((Plan)cm.getPlanList().get(i)).getStartDate())||(start.after(((Plan)cm.getPlanList().get(i)).getStartDate())&&start.before(((Plan)cm.getPlanList().get(i)).getEndDate()))){
+                                possible = false;
+                                break;
+                            }
+                            
+                        }
+                        if(possible){
+                            Task newTask= new Task(eview.getDName(),start,false);
+                            cm.addNewTask(newTask);
+                            cm.addNewPlan(newTask);
+                        }
 
-                        cm.addNewTask(newTask);
-                        cm.addNewPlan(newTask);
                     } catch (Exception ex) {
                         System.out.println("submit "+ex);
                         ex.printStackTrace();
@@ -164,22 +175,44 @@ public class CalendarController {
                         String EEvent = eview.getEndMonth()+"/"+eview.getEndDay()+"/"+calP.getDYear()+"/"+eview.getEndHour()+"/"+eview.getEndMin()+"/00";   
                         Date End=new SimpleDateFormat("MM/dd/yyyy/HH/mm/ss").parse(EEvent);
                         System.out.println(start+" To "+End);
-                        Event newEvent= new Event(eview.getDName(), start, End,false);
+                        
+                        for(int i = 0;i < cm.getPlanList().size();i++){
+                            if(start.after(End)||start.equals(End)){
+                                possible = false;
+                                break;
+                            }
+                            if(start.equals(((Plan)cm.getPlanList().get(i)).getStartDate())||(start.after(((Plan)cm.getPlanList().get(i)).getStartDate())&&start.before(((Plan)cm.getPlanList().get(i)).getEndDate()))){
+                                possible = false;
+                                break;
+                            }
+                            if(End.equals(((Plan)cm.getPlanList().get(i)).getEndDate())||(End.after(((Plan)cm.getPlanList().get(i)).getStartDate())&&End.before(((Plan)cm.getPlanList().get(i)).getEndDate()))){
+                                possible = false;
+                                break;
+                            }
+                        }
+                        if(possible){
+                            Event newEvent= new Event(eview.getDName(), start, End,false);
+                            cm.addNewEvent(newEvent);
+                            cm.addNewPlan(newEvent);
+                        }
 
-                        cm.addNewEvent(newEvent);
-                        cm.addNewPlan(newEvent);
                     } catch (Exception ex) {
                         System.out.println("exception "+ex);
                         ex.printStackTrace();
                     } 
                 }
                 //add newevent to some array list
-                cm.dw.writeData(cm.getPlanList());                                //writes to Event List.csv
-                
-                eview.reset();
-                eview.setVisible(false);//only use it if date is actaully useable
-                
-                cm.updateViews();
+                if(possible){
+                    cm.dw.writeData(cm.getPlanList());                                //writes to Event List.csv
+
+                    eview.reset();
+                    eview.setVisible(false);//only use it if date is actaully useable
+
+                    cm.updateViews();
+                }else{
+                    eview.errorWarn("Date is not Possible");
+                }
+
             }
     }
         
@@ -221,7 +254,10 @@ public class CalendarController {
                         mpv.setPlanTexts(name, startDate);
                     }
                         
-                        
+                    if(pb.getPlan().getDone()==true)
+                        mpv.disableDone();
+                    else
+                        mpv.enableDone();
                     mpv.setVisible(true);
                 }
             }

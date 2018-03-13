@@ -104,8 +104,10 @@ public class TodoListView extends javax.swing.JFrame implements ModelListener {
 
         PlannerPane.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
+        dateLabel.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         dateLabel.setText("DATE HERE");
 
+        viewLabel.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         viewLabel.setText("View");
 
         dayButton.setText("DAY");
@@ -170,6 +172,7 @@ public class TodoListView extends javax.swing.JFrame implements ModelListener {
 
         viewPane.add(agendaPane, "card3");
 
+        saikouNoPlanner.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         saikouNoPlanner.setText("Saikou no Planner");
 
         eventCheck.setText("Event");
@@ -182,7 +185,7 @@ public class TodoListView extends javax.swing.JFrame implements ModelListener {
             PlannerPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, PlannerPaneLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(saikouNoPlanner, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(saikouNoPlanner, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(dateLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(68, 68, 68)
@@ -205,13 +208,13 @@ public class TodoListView extends javax.swing.JFrame implements ModelListener {
             PlannerPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(PlannerPaneLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(PlannerPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(PlannerPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(PlannerPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(PlannerPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                         .addGroup(PlannerPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(dayButton, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(agendaButton, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addComponent(saikouNoPlanner, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(dateLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(dateLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(saikouNoPlanner, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGroup(PlannerPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(PlannerPaneLayout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)

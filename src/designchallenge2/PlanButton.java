@@ -33,7 +33,9 @@ public class PlanButton extends JButton{
     }
     public void planEnded(){
         this.plan.markedDone();
-        this.setEnabled(false);
+        String coloredname ="<html> <font color = Gray> "+ plan.getName()+" </font> <br> </html>";
+        this.setText(coloredname);
+        this.setBackground(Color.GRAY);
     }
     
     public Plan getPlan(){

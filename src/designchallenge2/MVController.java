@@ -9,6 +9,6 @@ package designchallenge2;
  *
  * @author Ashen One
  */
-public class TodoListModel {
+public interface MVController{
     
 }

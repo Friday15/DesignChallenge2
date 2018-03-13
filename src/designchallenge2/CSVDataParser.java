@@ -44,7 +44,7 @@ public class CSVDataParser extends DataParser{
     void readData(){
         System.out.println("Reading data from csv file");
         //F:\\Documents\\NetBeansProjects\\DesignChallenge2\\src\\designchallenge2\\Event List.csv"
-        String csvFile = "F:\\\\Documents\\\\NetBeansProjects\\\\DesignChallenge2\\\\src\\\\designchallenge2\\\\Event List.csv";               
+        String csvFile = "F:\\Documents\\NetBeansProjects\\DesignChallenge2\\src\\designchallenge2\\Event List.csv";               
         String line = "";
         String cvsSplitBy = ",";
        

@@ -188,6 +188,12 @@ public class ModifyPlanView extends javax.swing.JFrame {
         StartDateField.setText("");
         EndDateField.setText("");
     }
+    void disableDone(){
+        DoneButton.setEnabled(false);
+    }
+    void enableDone(){
+        DoneButton.setEnabled(true);
+    }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BackButton;
