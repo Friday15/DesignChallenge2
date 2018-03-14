@@ -25,7 +25,7 @@ public class CalendarController implements MVController{
     ModifyPlanView mpv;
     PlanButton pb;
     
-    public CalendarController(final CalendarModel cm){
+    public CalendarController(CalendarModel cm){
         this.calP = new CalendarProgramView(cm, this);
         this.eview = new EventView();
         this.tlv = new TodoListView(cm, this);
@@ -68,26 +68,49 @@ public class CalendarController implements MVController{
         tlv.setVisible(true);
     }
     
-    public ArrayList <Plan> sortedByHours (ArrayList<Plan> plans){
-        ArrayList<Plan> sortedList = new ArrayList();
-        Plan temp;
-        for(int k = 0;k < plans.size();k++){
-            sortedList.add(plans.get(k));
+    public String monthToWord(int monthNum){
+        String month = new String();
+        switch (monthNum) {
+            case 0:
+                month = "January";
+                break;
+            case 1:
+                month = "February";
+                break;
+            case 2:
+                month = "March";
+                break;
+            case 3:
+                month = "April";
+                break;
+            case 4:
+                month = "May";
+                break;
+            case 5:
+                month = "June";
+                break;
+            case 6:
+                month = "July";
+                break;
+            case 7:
+                month = "August";
+                break;
+            case 8:
+                month = "September";
+                break;
+            case 9:
+                month = "October";
+                break;
+            case 10:
+                month = "November";
+                break;
+            case 11:
+                month = "December";
+                break;
+            default:
+                break;
         }
-        
-        for (int i = 1; i < plans.size(); i++) {
-            for(int j = i ; j > 0 ; j--){
-                if(Integer.parseInt(sortedList.get(j).getDay()) == Integer.parseInt(sortedList.get(j-1).getDay())){
-                    if(Integer.parseInt(sortedList.get(j).getHour()) < Integer.parseInt(sortedList.get(j-1).getHour())){
-                        temp = sortedList.get(j);
-                        sortedList.set(j, sortedList.get(j-1));
-                        sortedList.set(j-1, temp);
-                    }
-                } 
-            }
-        }
-        
-        return sortedList;
+        return month;
     }
     
     class btnPrev_Action implements ActionListener

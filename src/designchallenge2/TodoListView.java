@@ -10,11 +10,9 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.Date;
 import javax.swing.BorderFactory;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
-import javax.swing.JRadioButton;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.Document;
 import javax.swing.text.SimpleAttributeSet;
@@ -484,54 +482,11 @@ public class TodoListView extends javax.swing.JFrame implements ModelListener {
         } 
     }
     
-    public String monthToWord(int monthNum){
-        String month = new String();
-        switch (monthNum) {
-            case 0:
-                month = "January";
-                break;
-            case 1:
-                month = "February";
-                break;
-            case 2:
-                month = "March";
-                break;
-            case 3:
-                month = "April";
-                break;
-            case 4:
-                month = "May";
-                break;
-            case 5:
-                month = "June";
-                break;
-            case 6:
-                month = "July";
-                break;
-            case 7:
-                month = "August";
-                break;
-            case 8:
-                month = "September";
-                break;
-            case 9:
-                month = "October";
-                break;
-            case 10:
-                month = "November";
-                break;
-            case 11:
-                month = "December";
-                break;
-            default:
-                break;
-        }
-        return month;
-    }
+    
     
     public void changeDateLabel(CalendarModel cm){
         StringBuilder sb = new StringBuilder();
-        String month = monthToWord(cm.monthToday);
+        String month = cont.monthToWord(cm.monthToday);
         
         sb.append(month).append(" ");
         sb.append(cm.dayToday);
@@ -564,7 +519,7 @@ public class TodoListView extends javax.swing.JFrame implements ModelListener {
         String tempEndDay = event.getEDay();
         String tempEndHour = event.getEHour();
         String tempEndMin = event.getEMin();
-        String tempMonth = monthToWord(Integer.parseInt(event.getMonth())-1);
+        String tempMonth = cont.monthToWord(Integer.parseInt(event.getMonth())-1);
         System.out.println("tempmonth "+tempMonth);
         
         if(Integer.parseInt(tempDay) < Integer.parseInt(tempEndDay)){

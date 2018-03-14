@@ -69,14 +69,6 @@ public class CalendarModel implements ModelVC{
 //        PSVreaderToModel(pdp.getEvents());
     }
    
-    void mergeLists(){
-        for(int i = 0;i < tasks.size();i++){
-            plans.add(tasks.get(i));
-        }
-        for(int j = 0;j < events.size();j++){
-            plans.add(events.get(j));
-        }
-    }
     
     void CSVreaderToModel(ArrayList <String []> plansRead){
         for(int i = 0; i < plansRead.size(); i++){
