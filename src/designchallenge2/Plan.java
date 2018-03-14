@@ -39,7 +39,6 @@ abstract public class Plan {
         this.name = name;
         StartDate = s;
         EndDate = e;
-
         DateFormat df = new SimpleDateFormat("MM/dd/yyyy/HH/mm");
         String[] stuff =df.format(s).split("/");
         Month = stuff[0];
@@ -64,7 +63,8 @@ abstract public class Plan {
         
         }
     public Plan(String name ,Date s, Boolean d){
-        done = false;
+        
+        done = d;
         this.name = name;
         StartDate = s;
         DateFormat df = new SimpleDateFormat("MM/dd/yyyy/HH/mm");
@@ -86,7 +86,8 @@ abstract public class Plan {
         EYear =stuff2[2];
         EHour = stuff2[3];
         EMin = stuff2[4];
-        
+        daysBetween = new ArrayList();
+        daysBetween.add(Integer.parseInt(Day));
     }
     
     public String getName(){

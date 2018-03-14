@@ -10,9 +10,11 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Date;
 import javax.swing.BorderFactory;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
+import javax.swing.JRadioButton;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.Document;
 import javax.swing.text.SimpleAttributeSet;
@@ -104,10 +106,8 @@ public class TodoListView extends javax.swing.JFrame implements ModelListener {
 
         PlannerPane.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-        dateLabel.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         dateLabel.setText("DATE HERE");
 
-        viewLabel.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         viewLabel.setText("View");
 
         dayButton.setText("DAY");
@@ -172,10 +172,14 @@ public class TodoListView extends javax.swing.JFrame implements ModelListener {
 
         viewPane.add(agendaPane, "card3");
 
-        saikouNoPlanner.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         saikouNoPlanner.setText("Saikou no Planner");
 
         eventCheck.setText("Event");
+        eventCheck.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                eventCheckActionPerformed(evt);
+            }
+        });
 
         taskCheck.setText("Task");
 
@@ -185,7 +189,7 @@ public class TodoListView extends javax.swing.JFrame implements ModelListener {
             PlannerPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, PlannerPaneLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(saikouNoPlanner, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(saikouNoPlanner, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(dateLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(68, 68, 68)
@@ -208,13 +212,13 @@ public class TodoListView extends javax.swing.JFrame implements ModelListener {
             PlannerPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(PlannerPaneLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(PlannerPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(PlannerPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(PlannerPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(PlannerPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addGroup(PlannerPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(dayButton, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(agendaButton, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addComponent(dateLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(saikouNoPlanner, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(saikouNoPlanner, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(dateLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGroup(PlannerPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(PlannerPaneLayout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -260,6 +264,10 @@ public class TodoListView extends javax.swing.JFrame implements ModelListener {
         dayButton.setEnabled(true);
     }//GEN-LAST:event_agendaButtonActionPerformed
 
+    private void eventCheckActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eventCheckActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_eventCheckActionPerformed
+
     
     public void addCheckListener(ActionListener al){
         eventCheck.addActionListener(al);
@@ -274,7 +282,6 @@ public class TodoListView extends javax.swing.JFrame implements ModelListener {
    
     
     void DayFill(int start, int end, int planNum){
-        System.out.println("start " + start);
             
         for(int k = start;k < end;k++){
             if(k == start){
@@ -308,7 +315,6 @@ public class TodoListView extends javax.swing.JFrame implements ModelListener {
     }
     
     void DayFill(int start, int end, int planNum, int tempMin){
-        System.out.println("start " + start);
         
         int slotNum = start*2;
         if(tempMin == 30)
@@ -330,7 +336,6 @@ public class TodoListView extends javax.swing.JFrame implements ModelListener {
     }
     
     void DayFill(int start, int end, int planNum, int tempMin, int tempEndMin){
-        System.out.println("start " + start);
         
         int slotNum = start*2;
         if(tempMin == 30)
@@ -380,7 +385,7 @@ public class TodoListView extends javax.swing.JFrame implements ModelListener {
         int tempDay = Integer.parseInt(tempPlan.getDay());
         
         if(cm.dayToday == tempDay){
-            updateAgenda(tempPlan);
+            //updateAgenda(tempPlan);
             for(int j = 0;j < slots.size();j++){                                                    //increments over slots
                 int tempMin = Integer.parseInt(tempPlan.getMin());
                 int tempHour = Integer.parseInt(tempPlan.getHour()); 
@@ -407,22 +412,21 @@ public class TodoListView extends javax.swing.JFrame implements ModelListener {
 
             if(cm.dayToday == dayWithinRange){
 
-                
-                updateAgenda((Event)tempPlan);
+                //updateAgenda((Event)tempPlan);
                 for(int j = 0;j < slots.size();j++){                                                    //increments over slots
                     
                     if(tempHour == j){
                         
-                        if(tempDay < tempEndDay){                               //if it goes overnight or further
-                            if(tempDay == dayWithinRange){                      
-                                DayFill(j, slots.size(), i, tempMin);           //fill from start time till end of day
+                        if(tempDay < tempEndDay){
+                            if(tempDay == dayWithinRange){
+                                DayFill(j, slots.size(), i, tempMin);
 
                             }else if(dayWithinRange > tempDay && dayWithinRange < tempEndDay){
-                                DayFill(0, slots.size(), i);                   //fill entire day
+                                DayFill(0, slots.size(), i);                   //take out minutes
 
                             }else if(tempEndDay == dayWithinRange){
                                 if(tempEndMin == 30){
-                                     DayFill(0, tempEndHour*2+1, i, tempMin);   //fill from start of day to end time
+                                     DayFill(0, tempEndHour*2+1, i, tempMin);
                                      break;
                                      
                                 }else{
@@ -433,11 +437,11 @@ public class TodoListView extends javax.swing.JFrame implements ModelListener {
                             }    
                         }else{
                             if(tempHour < tempEndHour){
-                                    DayFill(tempHour, tempEndHour*2, i, tempMin, tempEndMin);   //fill from start hour to end hour
+                                    DayFill(tempHour, tempEndHour*2, i, tempMin, tempEndMin);
                                     break;       
                                     
                             }else{
-                                if(tempMin < tempEndMin){                       //fill one slot
+                                if(tempMin < tempEndMin){
                                     DayFill(tempHour, tempHour+1, i);
                                     break;
                                 }else{
@@ -455,10 +459,8 @@ public class TodoListView extends javax.swing.JFrame implements ModelListener {
     public void modelUpdated(ModelVC model) {
         cm = ((CalendarModel)model);
         resetSlots();                                                           
-        resetAgenda();
-        changeDateLabel(cm);
-        //ArrayList <Plan> tempPlans = cont.sortedByHours(cm.getPlanList());
         
+        changeDateLabel(cm);
         for(int i = 0;i < cm.getPlanList().size();i++){
             Plan tempPlan = ((Plan)cm.getPlanList().get(i));
             
@@ -472,7 +474,7 @@ public class TodoListView extends javax.swing.JFrame implements ModelListener {
             }
             
             if(eventCheck.isSelected() == false && taskCheck.isSelected() == false){
-                if(tempPlan instanceof Event){                               
+                if(tempPlan instanceof Event){                               //checks if instance of event
                     EventFill(cm, tempPlan, i);
                 }else if(tempPlan instanceof Task){
                     TaskFill(cm, tempPlan, i);
@@ -480,6 +482,18 @@ public class TodoListView extends javax.swing.JFrame implements ModelListener {
             }
                                                        
         } 
+        this.resetAgenda();
+        for(int j = 0;j<slots.size();j++){
+            boolean add = true;
+            if(!slots.get(j).isContentAreaFilled())
+                add = false;
+            else if(j>=1){
+                if(slots.get(j).getPlan()==slots.get(j-1).getPlan())
+                    add = false;
+            }
+            if(add == true)
+                updateAgendaHybrid(slots.get(j).getPlan());
+            }
     }
     
     
@@ -493,60 +507,38 @@ public class TodoListView extends javax.swing.JFrame implements ModelListener {
         dateLabel.setText(sb.toString());
     }
     
-    public void updateAgenda(Plan plan){
+    public void updateAgendaHybrid(Plan plan){
         StringBuilder sb = new StringBuilder();
         String tempHour = plan.getHour();
         String tempMin = plan.getMin();
+        if(cm.dayToday != Integer.parseInt(plan.getDay())){
+            tempHour="0";
+            tempMin="00";
+        }
+        String tempEndHour = plan.getEHour();
+        String tempEndMin = plan.getEMin();
+        if(cm.dayToday != Integer.parseInt(plan.getEDay())){
+            tempEndHour="23";
+            tempEndMin="59";
+        }
         String tempName = plan.getName();
         
         sb.append(tempHour);
         sb.append(": ").append(tempMin);
-        sb.append(" - ").append(tempName).append("\n");
-        
-        if(plan.getDone() == true)
-            appendToAgenda(sb.toString(), Color.GRAY);
-        else
-            appendToAgenda(sb.toString(), Color.GREEN);
-    }
-    
-    public void updateAgenda(Event event){
-        StringBuilder sb = new StringBuilder();
-        String tempDay = event.getDay();
-        String tempHour = event.getHour();
-        String tempMin = event.getMin();
-        String tempName = event.getName();
-        String tempEndMonth = event.getEMonth();
-        String tempEndDay = event.getEDay();
-        String tempEndHour = event.getEHour();
-        String tempEndMin = event.getEMin();
-        String tempMonth = cont.monthToWord(Integer.parseInt(event.getMonth())-1);
-        System.out.println("tempmonth "+tempMonth);
-        
-        if(Integer.parseInt(tempDay) < Integer.parseInt(tempEndDay)){
-           sb.append(tempMonth).append(", ");
-           sb.append(tempDay).append(" ");
-           sb.append(tempHour);
-           sb.append(": ").append(tempMin);
-           sb.append(" to ");
-           sb.append(tempEndMonth).append(" ");
-           sb.append(tempEndDay).append(" ");
-        }else{
-            sb.append(tempHour);
-            sb.append(": ").append(tempMin);
-            sb.append(" to ");
-            
-        }
-        
+        sb.append(" to ");
         sb.append(tempEndHour);
         sb.append(": ").append(tempEndMin);
         sb.append(" - ").append(tempName).append("\n");
-        
-        if(event.getDone() == true)
+        if(plan.getDone()==false){
+            if(plan instanceof Event)
+                appendToAgenda(sb.toString(), Color.BLUE);
+            else
+                appendToAgenda(sb.toString(), Color.GREEN);
+        }else
             appendToAgenda(sb.toString(), Color.GRAY);
-        else
-            appendToAgenda(sb.toString(), Color.BLUE);
-
+        
     }
+    
     
     public void appendToAgenda(String s, Color color) {
         SimpleAttributeSet keyWord = new SimpleAttributeSet();

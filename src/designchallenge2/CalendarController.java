@@ -10,14 +10,13 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 
 /**
  *
  * @author Mart
  */
-public class CalendarController implements MVController{
+public class CalendarController implements MVController {
     CalendarProgramView calP;
     CalendarModel cm;
     EventView eview;
@@ -41,9 +40,15 @@ public class CalendarController implements MVController{
                public void mouseClicked(MouseEvent evt)  
                     {  
                         int col = calP.calendarTable.getSelectedColumn();  
-                        int row = calP.calendarTable.getSelectedRow();  
+                        int row = calP.calendarTable.getSelectedRow(); 
+
                         if(calP.calendarTable.getValueAt(row, col) != null){
-                            cm.dayToday = (int) calP.calendarTable.getValueAt(row, col);
+                            String test = calP.calendarTable.getValueAt(row, col).toString().replaceAll("html","");
+                            test = test.replaceAll("b","");
+                            test = test.replaceAll("r","");
+                            test = test.replaceAll("/","");
+                            test = test.replaceAll("<>","");
+                            cm.dayToday = Integer.parseInt(test);
                             cm.updateViews();
                         }
                         
@@ -219,7 +224,6 @@ public class CalendarController implements MVController{
                         
                         String EEvent = eview.getEndMonth()+"/"+eview.getEndDay()+"/"+calP.getDYear()+"/"+eview.getEndHour()+"/"+eview.getEndMin()+"/00";   
                         Date End=new SimpleDateFormat("MM/dd/yyyy/HH/mm/ss").parse(EEvent);
-                        System.out.println(start+" To "+End);
                         
                         for(int i = 0;i < cm.getPlanList().size();i++){
                             if(start.after(End)||start.equals(End)){
@@ -351,6 +355,7 @@ public class CalendarController implements MVController{
                         }    
                     }  
                 }
+                pb.RemovePlan();
                 cm.dw.writeData(cm.getEventList()); 
                 cm.updateViews();
             }

@@ -15,7 +15,7 @@ import javax.swing.JButton;
 public class PlanButton extends JButton{
     private Plan plan;
     public PlanButton(){
-        
+        plan =null;
     }
     
     public void setPlan(Plan plan){
@@ -40,5 +40,8 @@ public class PlanButton extends JButton{
     
     public Plan getPlan(){
         return this.plan;
+    }
+    public void RemovePlan(){
+        plan =null;
     }
 }

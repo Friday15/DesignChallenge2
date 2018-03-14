@@ -69,6 +69,14 @@ public class CalendarModel implements ModelVC{
 //        PSVreaderToModel(pdp.getEvents());
     }
    
+    void mergeLists(){
+        for(int i = 0;i < tasks.size();i++){
+            plans.add(tasks.get(i));
+        }
+        for(int j = 0;j < events.size();j++){
+            plans.add(events.get(j));
+        }
+    }
     
     void CSVreaderToModel(ArrayList <String []> plansRead){
         for(int i = 0; i < plansRead.size(); i++){
@@ -123,20 +131,24 @@ public class CalendarModel implements ModelVC{
     }
     
     public void addNewEvent(Event eve){
-        System.out.println("potato event");
         events.add(eve);
-
+//        for(int i = 0;i < getDaysBetweenDates(eve.getStartDate(), eve.getEndDate()).size();i++){
+//            addNewTakenDate(getDaysBetweenDates(eve.getStartDate(), eve.getEndDate()).get(i));
+//        }  
     }
     
     public void addNewTask(Task t){
         tasks.add(t);
-
+        //addNewTakenDate(t.getStartDate());
     }
     
     public void addNewPlan(Plan p){
         plans.add(p);
     }
-
+    
+//    public void addNewTakenDate(Date d){
+//        takenDates.add(d);
+//    }
     
     public ArrayList getEventList(){
         return this.events;

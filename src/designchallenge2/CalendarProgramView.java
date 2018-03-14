@@ -93,7 +93,8 @@ public class CalendarProgramView implements ModelListener{
 		calendarTable.setColumnSelectionAllowed(true);
 		calendarTable.setRowSelectionAllowed(true);
 		calendarTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-
+                
+                
 		calendarTable.setRowHeight(76);
 		this.cm.modelCalendarTable.setColumnCount(7);
 		this.cm.modelCalendarTable.setRowCount(6);
@@ -139,18 +140,21 @@ public class CalendarProgramView implements ModelListener{
                         
                         int haveEvent=0;
                         
-//                        String text ="<html> <b> "+i+" </b> <br> ";
-//                        for(int k=0;k<cm.getEventList().size();k++){
-//                            if(Integer.parseInt(((Event)(cm.getEventList().get(k))).getDay())==i&&Integer.parseInt(((Event)(cm.getEventList().get(k))).getMonth())==month+1
-//                                    &&Integer.parseInt(((Event)(cm.getEventList().get(k))).getYear())==year){
-//
-//                                text=text+"<font color = "+"Red"+"> "+((Event)(cm.getEventList().get(k))).getName()+" </font> <br> ";
-//                                haveEvent=1;
-//                            }
-//                        }
-//                        text=text+"</html>";    
+                        String text ="<html><b>"+i+"</b><br>";
+                        for(int k=0;k<cm.getPlanList().size();k++){
+                            if(Integer.parseInt(((Plan)(cm.getPlanList().get(k))).getMonth())==month+1&&Integer.parseInt(((Plan)(cm.getPlanList().get(k))).getYear())==year){
+
+                                for(int x = 0;x < ((Plan)cm.getPlanList().get(k)).getDaysBetween().size();x++){
+                                    if(((Plan)cm.getPlanList().get(k)).getDaysBetween().get(x)==i){
+                                        haveEvent=1;
+                                    }       
+                            }
+                                
+                            }
+                        }
+                        text=text+"</html>";    
                         if(haveEvent==1){
-                           //cm.modelCalendarTable.setValueAt(text, row, column);
+                           cm.modelCalendarTable.setValueAt(text, row, column);
                         }
                         else
                            cm.modelCalendarTable.setValueAt(i, row, column);// THIS IS HOW U CHANGE STUFF IN SQUARES
@@ -158,7 +162,8 @@ public class CalendarProgramView implements ModelListener{
 		}
 
 		calendarTable.setDefaultRenderer(calendarTable.getColumnClass(0), new TableRenderer(calendarTable.getSelectedRow(), calendarTable.getSelectedColumn()));
-                
+		calendarTable.setColumnSelectionAllowed(true);
+		calendarTable.setRowSelectionAllowed(true);
                 
 	}
         
