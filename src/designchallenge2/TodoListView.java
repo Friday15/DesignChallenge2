@@ -10,11 +10,9 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.Date;
 import javax.swing.BorderFactory;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
-import javax.swing.JRadioButton;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.Document;
 import javax.swing.text.SimpleAttributeSet;
@@ -426,8 +424,8 @@ public class TodoListView extends javax.swing.JFrame implements ModelListener {
 
                             }else if(tempEndDay == dayWithinRange){
                                 if(tempEndMin == 30){
-                                     DayFill(0, tempEndHour*2+1, i, tempMin);
-                                     break;
+                                    DayFill(0, tempEndHour*2+1, i, tempMin);
+                                    break;
                                      
                                 }else{
                                     DayFill(0, tempEndHour*2, i, tempMin);
